@@ -21,7 +21,7 @@ Get up and running with Tidal Playlist Organizer in 5 minutes!
 5. Once created, note your **Client ID**
 6. In the app settings, add this redirect URI:
    ```
-   http://localhost:5173
+   http://localhost:5173/auth/callback
    ```
 7. Save the changes
 
@@ -47,7 +47,7 @@ Your `.env` should look like this:
 
 ```env
 VITE_TIDAL_CLIENT_ID=abc123xyz456  # Your actual Client ID here
-VITE_TIDAL_REDIRECT_URI=http://localhost:5173
+VITE_TIDAL_REDIRECT_URI=http://localhost:5173/auth/callback
 VITE_COUNTRY_CODE=DE  # Your Tidal account country (DE=Germany, US=USA, NO=Norway, etc.)
 ```
 
