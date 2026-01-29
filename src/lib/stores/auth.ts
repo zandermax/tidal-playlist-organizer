@@ -1,5 +1,12 @@
 import { writable, get } from 'svelte/store';
-import { init, initializeLogin, finalizeLogin, credentialsProvider, logout as tidalLogout } from '@tidal-music/auth';
+import { browser } from '$app/environment';
+import {
+	init,
+	initializeLogin,
+	finalizeLogin,
+	credentialsProvider,
+	logout as tidalLogout
+} from '@tidal-music/auth';
 import { config } from './config';
 import { decodeJWT } from '$lib/utils/tidal-utils';
 import type { TidalCredentials } from '$lib/types/tidal';
@@ -31,7 +38,9 @@ function createAuthStore() {
 
 		const cfg = get(config);
 		if (!cfg.clientId) {
-			throw new Error('Client ID not configured. Please set VITE_TIDAL_CLIENT_ID in your .env file.');
+			throw new Error(
+				'Client ID not configured. Please set VITE_TIDAL_CLIENT_ID in your .env file.'
+			);
 		}
 
 		await init({
@@ -47,12 +56,17 @@ function createAuthStore() {
 	 * Check if user is already authenticated
 	 */
 	async function checkAuth(): Promise<void> {
+		if (!browser) {
+			set(initialState);
+			return;
+		}
+
 		try {
-			update(state => ({ ...state, isLoading: true, error: null }));
+			update((state) => ({ ...state, isLoading: true, error: null }));
 
 			await initAuth();
 
-			const credentials = await credentialsProvider.getCredentials() as TidalCredentials;
+			const credentials = (await credentialsProvider.getCredentials()) as TidalCredentials;
 
 			if (credentials?.token) {
 				const tokenData = decodeJWT(credentials.token);
@@ -87,13 +101,17 @@ function createAuthStore() {
 	 * Initiate login flow
 	 */
 	async function login(): Promise<void> {
+		if (!browser) return;
+
 		try {
-			update(state => ({ ...state, isLoading: true, error: null }));
+			update((state) => ({ ...state, isLoading: true, error: null }));
 
 			const cfg = get(config);
 
 			// Store config for after redirect
-			localStorage.setItem('tidalConfig', JSON.stringify(cfg));
+			if (browser) {
+				localStorage.setItem('tidalConfig', JSON.stringify(cfg));
+			}
 
 			await initAuth();
 
@@ -102,10 +120,12 @@ function createAuthStore() {
 				redirectUri: cfg.redirectUri
 			});
 
-			window.location.href = loginUrl;
+			if (browser) {
+				window.location.href = loginUrl;
+			}
 		} catch (error) {
 			const message = error instanceof Error ? error.message : 'Login failed';
-			update(state => ({
+			update((state) => ({
 				...state,
 				isLoading: false,
 				error: message
@@ -118,8 +138,10 @@ function createAuthStore() {
 	 * Complete login after OAuth redirect
 	 */
 	async function finalizeAuth(searchParams: string): Promise<void> {
+		if (!browser) return;
+
 		try {
-			update(state => ({ ...state, isLoading: true, error: null }));
+			update((state) => ({ ...state, isLoading: true, error: null }));
 
 			await initAuth();
 
@@ -127,7 +149,7 @@ function createAuthStore() {
 			await finalizeLogin(searchParams);
 
 			// Get credentials and extract user ID
-			const credentials = await credentialsProvider.getCredentials() as TidalCredentials;
+			const credentials = (await credentialsProvider.getCredentials()) as TidalCredentials;
 			const tokenData = decodeJWT(credentials.token);
 			const userId = tokenData?.uid?.toString() || null;
 
@@ -139,7 +161,7 @@ function createAuthStore() {
 			});
 		} catch (error) {
 			const message = error instanceof Error ? error.message : 'Authentication failed';
-			update(state => ({
+			update((state) => ({
 				...state,
 				isAuthenticated: false,
 				userId: null,
@@ -154,9 +176,13 @@ function createAuthStore() {
 	 * Logout and clear session
 	 */
 	async function logout(): Promise<void> {
+		if (!browser) return;
+
 		try {
 			await tidalLogout();
-			localStorage.removeItem('tidalConfig');
+			if (browser) {
+				localStorage.removeItem('tidalConfig');
+			}
 			set(initialState);
 		} catch (error) {
 			console.error('Logout error:', error);

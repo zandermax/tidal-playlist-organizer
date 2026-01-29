@@ -1,4 +1,5 @@
 import { readable } from 'svelte/store';
+import { browser } from '$app/environment';
 import type { TidalConfig } from '$lib/types/tidal';
 
 /**
@@ -7,7 +8,9 @@ import type { TidalConfig } from '$lib/types/tidal';
  */
 export const config = readable<TidalConfig>({
 	clientId: import.meta.env.VITE_TIDAL_CLIENT_ID || '',
-	redirectUri: import.meta.env.VITE_TIDAL_REDIRECT_URI || '',
+	redirectUri: browser
+		? import.meta.env.VITE_TIDAL_REDIRECT_URI || window.location.origin
+		: import.meta.env.VITE_TIDAL_REDIRECT_URI || '',
 	countryCode: import.meta.env.VITE_COUNTRY_CODE || 'NO',
 	credentialsStorageKey: 'tidalPlaylistOrganizer'
 });

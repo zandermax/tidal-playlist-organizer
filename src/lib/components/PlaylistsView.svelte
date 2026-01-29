@@ -2,21 +2,41 @@
 	import { onMount } from 'svelte';
 	import { authStore } from '$lib/stores/auth';
 	import { config } from '$lib/stores/config';
+	import { viewPreferences } from '$lib/stores/viewPreferences';
 	import { createAPIClient } from '@tidal-music/api';
 	import { credentialsProvider } from '@tidal-music/auth';
 	import { getCoverArtUrl } from '$lib/utils/tidal-utils';
-	import LoadingSpinner from './LoadingSpinner.svelte';
 	import ErrorMessage from './ErrorMessage.svelte';
-	import PlaylistCard from './PlaylistCard.svelte';
+	import Toolbar from './toolbar/Toolbar.svelte';
+	import PlaylistGrid from './playlist/PlaylistGrid.svelte';
+	import StatsCards from './dashboard/StatsCards.svelte';
+	import BulkActionBar from './bulk/BulkActionBar.svelte';
+	import type { FilterState } from './toolbar/FilterPanel.svelte';
 	import type { Playlist, CoverArt } from '$lib/types/tidal';
 
 	let isLoading = $state(true);
 	let error = $state<string | null>(null);
 	let playlists = $state<Playlist[]>([]);
+	let filteredPlaylists = $state<Playlist[]>([]);
 	let included = $state<CoverArt[]>([]);
+	let selectedIds = $state<Set<string>>(new Set());
+	let searchQuery = $state('');
+	let activeFilters = $state<FilterState>({
+		dateRange: 'all',
+		tags: [],
+		folders: []
+	});
 
 	const auth = $derived($authStore);
 	const cfg = $derived($config);
+	const prefs = $derived($viewPreferences);
+
+	// Create a map of cover URLs for easy lookup
+	const coverUrls = $derived(
+		new Map(
+			playlists.map((playlist) => [playlist.id, getCoverArtUrl(playlist, included)])
+		)
+	);
 
 	async function loadPlaylists() {
 		if (!auth.userId) {
@@ -58,6 +78,7 @@
 
 			playlists = data.data as Playlist[];
 			included = (data.included as CoverArt[]) || [];
+			filterAndSortPlaylists();
 			isLoading = false;
 		} catch (err) {
 			console.error('Error loading playlists:', err);
@@ -66,141 +87,214 @@
 		}
 	}
 
-	async function handleLogout() {
-		try {
-			await authStore.logout();
-			window.location.reload();
-		} catch (err) {
-			console.error('Logout error:', err);
-			alert('Failed to logout. Please try again.');
+	function filterAndSortPlaylists() {
+		let result = [...playlists];
+
+		// Apply search filter
+		if (searchQuery.trim()) {
+			const query = searchQuery.toLowerCase();
+			result = result.filter((p) => p.attributes.name.toLowerCase().includes(query));
+		}
+
+		// Apply date range filter
+		if (activeFilters.dateRange !== 'all') {
+			const days = parseInt(activeFilters.dateRange);
+			const cutoffDate = new Date();
+			cutoffDate.setDate(cutoffDate.getDate() - days);
+
+			result = result.filter((p) => {
+				const modifiedDate = new Date(p.attributes.lastModifiedAt || 0);
+				return modifiedDate >= cutoffDate;
+			});
+		}
+
+		// Apply track count filter
+		if (activeFilters.minTracks !== undefined) {
+			result = result.filter((p) => (p.attributes.numberOfItems || 0) >= activeFilters.minTracks!);
+		}
+		if (activeFilters.maxTracks !== undefined) {
+			result = result.filter((p) => (p.attributes.numberOfItems || 0) <= activeFilters.maxTracks!);
+		}
+
+		// Apply sorting
+		result.sort((a, b) => {
+			const aAttr = a.attributes;
+			const bAttr = b.attributes;
+
+			let comparison = 0;
+
+			switch (prefs.sortBy) {
+				case 'name':
+					comparison = aAttr.name.localeCompare(bAttr.name);
+					break;
+				case 'tracks':
+					comparison = (aAttr.numberOfItems || 0) - (bAttr.numberOfItems || 0);
+					break;
+				case 'created':
+					comparison =
+						new Date(aAttr.created || 0).getTime() - new Date(bAttr.created || 0).getTime();
+					break;
+				case 'modified':
+				default:
+					comparison =
+						new Date(aAttr.lastModifiedAt || 0).getTime() -
+						new Date(bAttr.lastModifiedAt || 0).getTime();
+					break;
+			}
+
+			return prefs.sortDirection === 'asc' ? comparison : -comparison;
+		});
+
+		filteredPlaylists = result;
+	}
+
+	function handleSearch(query: string) {
+		searchQuery = query;
+		filterAndSortPlaylists();
+	}
+
+	function handleFilter(filters: FilterState) {
+		activeFilters = filters;
+		filterAndSortPlaylists();
+	}
+
+	function handleSelect(id: string, selected: boolean) {
+		if (selected) {
+			selectedIds.add(id);
+		} else {
+			selectedIds.delete(id);
+		}
+		selectedIds = new Set(selectedIds);
+	}
+
+	function handleClearSelection() {
+		selectedIds = new Set();
+	}
+
+	function handleBulkAddToFolder() {
+		// TODO: Implement folder selection dialog
+		console.log('Add to folder:', Array.from(selectedIds));
+		alert('Add to folder feature coming soon!');
+	}
+
+	function handleBulkAddTags() {
+		// TODO: Implement tag selection dialog
+		console.log('Add tags:', Array.from(selectedIds));
+		alert('Add tags feature coming soon!');
+	}
+
+	function handleBulkDelete() {
+		if (
+			confirm(
+				`Are you sure you want to delete ${selectedIds.size} playlist${selectedIds.size > 1 ? 's' : ''}?`
+			)
+		) {
+			console.log('Delete playlists:', Array.from(selectedIds));
+			alert('Delete feature would remove playlists from Tidal.');
+			handleClearSelection();
 		}
 	}
+
+	function handleBulkExport() {
+		const selectedPlaylists = playlists.filter((p) => selectedIds.has(p.id));
+		const exportData = selectedPlaylists.map((p) => ({
+			name: p.attributes.name,
+			tracks: p.attributes.numberOfItems,
+			url: p.attributes.url
+		}));
+
+		const blob = new Blob([JSON.stringify(exportData, null, 2)], {
+			type: 'application/json'
+		});
+		const url = URL.createObjectURL(blob);
+		const a = document.createElement('a');
+		a.href = url;
+		a.download = 'playlists-export.json';
+		a.click();
+		URL.revokeObjectURL(url);
+	}
+
+	// Re-filter when sort preferences change
+	$effect(() => {
+		prefs.sortBy;
+		prefs.sortDirection;
+		filterAndSortPlaylists();
+	});
 
 	onMount(() => {
 		loadPlaylists();
 	});
 </script>
 
-<div class="card">
-	<div class="user-header">
-		<div class="user-info">
-			<h2>Your Playlists</h2>
-			{#if auth.userId}
-				<p>User ID: {auth.userId}</p>
-			{/if}
-		</div>
+<div class="playlists-view">
+	<div class="view-header">
 		<div>
-			<button onclick={handleLogout} class="btn btn-secondary">Logout</button>
+			<h1>Your Playlists</h1>
+			<p class="subtitle">{playlists.length} playlists in your library</p>
 		</div>
 	</div>
 
-	{#if isLoading}
-		<LoadingSpinner message="Loading your playlists..." />
-	{:else if error}
+	{#if error}
 		<ErrorMessage message={error} />
-	{:else if playlists.length === 0}
-		<div class="empty-state">
-			<h3>No playlists found</h3>
-			<p>Create some playlists in Tidal to see them here!</p>
-		</div>
 	{:else}
-		<div class="playlists-grid">
-			{#each playlists as playlist (playlist.id)}
-				<PlaylistCard {playlist} coverUrl={getCoverArtUrl(playlist, included)} />
-			{/each}
-		</div>
+		{#if !isLoading && playlists.length > 0}
+			<StatsCards playlists={playlists} />
+		{/if}
+
+		<Toolbar onSearch={handleSearch} onFilter={handleFilter} selectedCount={selectedIds.size} />
+
+		<PlaylistGrid
+			playlists={filteredPlaylists}
+			{coverUrls}
+			viewMode={prefs.viewMode}
+			{selectedIds}
+			onSelect={handleSelect}
+			loading={isLoading}
+		/>
+
+		<BulkActionBar
+			selectedCount={selectedIds.size}
+			onClear={handleClearSelection}
+			onAddToFolder={handleBulkAddToFolder}
+			onAddTags={handleBulkAddTags}
+			onDelete={handleBulkDelete}
+			onExport={handleBulkExport}
+		/>
 	{/if}
 </div>
 
 <style>
-	.card {
-		background: white;
-		border-radius: 12px;
-		padding: 40px;
-		box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-		margin-bottom: 20px;
+	.playlists-view {
+		width: 100%;
 	}
 
-	.user-header {
+	.view-header {
 		display: flex;
-		justify-content: space-between;
 		align-items: center;
-		margin-bottom: 30px;
-		padding-bottom: 20px;
-		border-bottom: 2px solid #eee;
+		justify-content: space-between;
+		margin-bottom: var(--space-8);
 	}
 
-	.user-info h2 {
-		color: #333;
-		margin-bottom: 5px;
+	.view-header h1 {
+		font-size: var(--font-size-3xl);
+		font-weight: var(--font-weight-bold);
+		color: var(--text-primary);
+		margin-bottom: var(--space-2);
 	}
 
-	.user-info p {
-		color: #666;
-		font-size: 0.9em;
-	}
-
-	.btn {
-		background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-		color: white;
-		border: none;
-		padding: 15px 40px;
-		font-size: 1.1em;
-		border-radius: 8px;
-		cursor: pointer;
-		transition: transform 0.2s, box-shadow 0.2s;
-		font-weight: 600;
-	}
-
-	.btn-secondary {
-		background: #f44336;
-	}
-
-	.btn:hover {
-		transform: translateY(-2px);
-		box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
-	}
-
-	.btn-secondary:hover {
-		box-shadow: 0 5px 20px rgba(244, 67, 54, 0.4);
-	}
-
-	.btn:active {
-		transform: translateY(0);
-	}
-
-	.empty-state {
-		text-align: center;
-		padding: 60px 20px;
-		color: #666;
-	}
-
-	.empty-state h3 {
-		margin-bottom: 10px;
-		color: #333;
-	}
-
-	.playlists-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-		gap: 20px;
-		margin-top: 20px;
+	.subtitle {
+		font-size: var(--font-size-sm);
+		color: var(--text-secondary);
+		margin: 0;
 	}
 
 	@media (max-width: 768px) {
-		.card {
-			padding: 20px;
+		.view-header h1 {
+			font-size: var(--font-size-2xl);
 		}
 
-		.user-header {
-			flex-direction: column;
-			gap: 15px;
-			text-align: center;
-		}
-
-		.playlists-grid {
-			grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-			gap: 15px;
+		.view-header {
+			margin-bottom: var(--space-6);
 		}
 	}
 </style>

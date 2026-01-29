@@ -1,5 +1,8 @@
 <script lang="ts">
 	import favicon from '$lib/assets/favicon.svg';
+	import '$lib/styles/design-system.css';
+	import '$lib/styles/themes/light.css';
+	import '$lib/styles/animations.css';
 
 	let { children } = $props();
 </script>
@@ -11,17 +14,7 @@
 {@render children()}
 
 <style>
-	:global(*) {
-		margin: 0;
-		padding: 0;
-		box-sizing: border-box;
-	}
-
 	:global(body) {
-		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
-			sans-serif;
-		background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 		min-height: 100vh;
-		padding: 20px;
 	}
 </style>

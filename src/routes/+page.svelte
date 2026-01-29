@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { authStore } from '$lib/stores/auth';
-	import Header from '$lib/components/Header.svelte';
+	import AppShell from '$lib/components/layout/AppShell.svelte';
 	import LoginView from '$lib/components/LoginView.svelte';
 	import PlaylistsView from '$lib/components/PlaylistsView.svelte';
 
@@ -14,22 +14,13 @@
 </script>
 
 <svelte:head>
-	<title>Tidal Playlist Organizer</title>
+	<title>Tidal Library</title>
 </svelte:head>
 
-<div class="container">
-	<Header title="🎵 Tidal Playlist Organizer" subtitle="View and manage your Tidal playlists" />
-
+<AppShell>
 	{#if auth.isAuthenticated}
 		<PlaylistsView />
 	{:else}
 		<LoginView />
 	{/if}
-</div>
-
-<style>
-	.container {
-		max-width: 1200px;
-		margin: 0 auto;
-	}
-</style>
+</AppShell>
