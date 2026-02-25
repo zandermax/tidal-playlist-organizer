@@ -1,9 +1,6 @@
 <script lang="ts">
 	import type { Playlist } from '$lib/types/tidal';
-	import folderIcon from '$lib/components/icons/FolderIcon.svg?raw';
-	import musicNoteIcon from '$lib/components/icons/MusicNoteIcon.svg?raw';
-	import clockIcon from '$lib/components/icons/ClockIcon.svg?raw';
-	import calendarIcon from '$lib/components/icons/CalendarIcon.svg?raw';
+	import Icon from '$lib/components/icons/Icon.svelte';
 
 	interface Props {
 		playlists: Playlist[];
@@ -48,7 +45,7 @@
 <div class="stats-cards">
 	<div class="stat-card">
 		<div class="stat-icon">
-			<span class="icon">{@html folderIcon}</span>
+			<Icon name="folder" size={24} />
 		</div>
 		<div class="stat-content">
 			<div class="stat-label">Playlists</div>
@@ -58,7 +55,7 @@
 
 	<div class="stat-card">
 		<div class="stat-icon">
-			<span class="icon">{@html musicNoteIcon}</span>
+			<Icon name="music-note" size={24} />
 		</div>
 		<div class="stat-content">
 			<div class="stat-label">Total Tracks</div>
@@ -68,7 +65,7 @@
 
 	<div class="stat-card">
 		<div class="stat-icon">
-			<span class="icon">{@html clockIcon}</span>
+			<Icon name="clock" size={24} />
 		</div>
 		<div class="stat-content">
 			<div class="stat-label">Est. Duration</div>
@@ -78,7 +75,7 @@
 
 	<div class="stat-card">
 		<div class="stat-icon">
-			<span class="icon">{@html calendarIcon}</span>
+			<Icon name="calendar" size={24} />
 		</div>
 		<div class="stat-content">
 			<div class="stat-label">Last Updated</div>
@@ -121,12 +118,6 @@
 		color: var(--primary-600);
 		border-radius: var(--radius-lg);
 		flex-shrink: 0;
-	}
-
-	.icon {
-		display: inline-flex;
-		width: 24px;
-		height: 24px;
 	}
 
 	.stat-content {

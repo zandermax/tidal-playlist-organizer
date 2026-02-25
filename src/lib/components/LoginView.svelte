@@ -2,8 +2,7 @@
 	import { authStore } from '$lib/stores/auth';
 	import ErrorMessage from './ErrorMessage.svelte';
 	import SpinnerIcon from '$lib/components/icons/SpinnerIcon.svelte';
-	import musicNoteIcon from '$lib/components/icons/MusicNoteIcon.svg?raw';
-	import infoIcon from '$lib/components/icons/InfoIcon.svg?raw';
+	import Icon from '$lib/components/icons/Icon.svelte';
 
 	let isLoggingIn = $state(false);
 	let error = $state<string | null>(null);
@@ -23,7 +22,7 @@
 <div class="login-container">
 	<div class="login-card animate-fade-in-up">
 		<div class="login-icon">
-			<span class="hero-icon">{@html musicNoteIcon}</span>
+			<Icon name="music-note" size={64} />
 		</div>
 
 		<h1>Welcome to Tidal Library</h1>
@@ -41,7 +40,7 @@
 				<span class="spinner"><SpinnerIcon /></span>
 				Connecting...
 			{:else}
-				<span class="btn-icon">{@html musicNoteIcon}</span>
+				<Icon name="music-note" size={20} />
 				Login with Tidal
 			{/if}
 		</button>
@@ -53,7 +52,7 @@
 		{/if}
 
 		<div class="info-box">
-			<span class="info-icon">{@html infoIcon}</span>
+			<span class="info-icon"><Icon name="info" size={16} /></span>
 			<p>
 				You'll need a Tidal account and API credentials from the
 				<a href="https://developer.tidal.com" target="_blank" class="info-link">
@@ -96,12 +95,6 @@
 		border-radius: var(--radius-2xl);
 	}
 
-	.hero-icon {
-		display: inline-flex;
-		width: 64px;
-		height: 64px;
-	}
-
 	h1 {
 		font-size: var(--font-size-3xl);
 		font-weight: var(--font-weight-bold);
@@ -127,12 +120,6 @@
 		height: 20px;
 	}
 
-	.btn-icon {
-		display: inline-flex;
-		width: 20px;
-		height: 20px;
-	}
-
 	.error-container {
 		margin-bottom: var(--space-6);
 	}
@@ -149,9 +136,6 @@
 	}
 
 	.info-icon {
-		display: inline-flex;
-		width: 16px;
-		height: 16px;
 		flex-shrink: 0;
 		margin-top: 2px;
 	}

@@ -1,10 +1,6 @@
 <script lang="ts">
 	import { organization, type Folder } from '$lib/stores/organization';
-	import plusIcon from '$lib/components/icons/PlusIcon.svg?raw';
-	import chevronDownIcon from '$lib/components/icons/ChevronDownIcon.svg?raw';
-	import chevronRightIcon from '$lib/components/icons/ChevronRightIcon.svg?raw';
-	import folderIcon from '$lib/components/icons/FolderIcon.svg?raw';
-	import trashIcon from '$lib/components/icons/TrashIcon.svg?raw';
+	import Icon from '$lib/components/icons/Icon.svelte';
 
 	interface Props {
 		folders?: Folder[];
@@ -53,7 +49,7 @@
 	<div class="tree-header">
 		<span class="tree-title">Folders</span>
 		<button class="add-button" onclick={handleAddFolder} title="Add folder">
-			<span class="btn-icon-sm">{@html plusIcon}</span>
+			<Icon name="plus" size={14} />
 		</button>
 	</div>
 
@@ -73,13 +69,13 @@
 						}}
 					>
 						{#if folder.expanded}
-							<span class="btn-icon-sm">{@html chevronDownIcon}</span>
+							<Icon name="chevron-down" size={14} />
 						{:else}
-							<span class="btn-icon-sm">{@html chevronRightIcon}</span>
+							<Icon name="chevron-right" size={14} />
 						{/if}
 					</button>
 
-					<span class="folder-icon">{@html folderIcon}</span>
+					<Icon name="folder" size={18} />
 
 					<span class="folder-name">{folder.name}</span>
 					<span class="folder-count">{folder.playlistIds.length}</span>
@@ -89,7 +85,7 @@
 						onclick={(e) => handleDeleteFolder(folder.id, e)}
 						title="Delete folder"
 					>
-						<span class="btn-icon-sm">{@html trashIcon}</span>
+						<Icon name="trash" size={14} />
 					</button>
 				</div>
 
@@ -100,7 +96,7 @@
 							class:active={selectedFolderId === childFolder.id}
 							onclick={() => handleSelect(childFolder.id)}
 						>
-							<span class="folder-icon">{@html folderIcon}</span>
+							<Icon name="folder" size={18} />
 							<span class="folder-name">{childFolder.name}</span>
 							<span class="folder-count">{childFolder.playlistIds.length}</span>
 						</button>
@@ -196,13 +192,6 @@
 		color: inherit;
 	}
 
-	.folder-icon {
-		display: inline-flex;
-		width: 18px;
-		height: 18px;
-		flex-shrink: 0;
-	}
-
 	.folder-name {
 		flex: 1;
 		overflow: hidden;
@@ -235,10 +224,5 @@
 		background-color: var(--error-50);
 	}
 
-	.btn-icon-sm {
-		display: inline-flex;
-		width: 14px;
-		height: 14px;
-		flex-shrink: 0;
-	}
+
 </style>

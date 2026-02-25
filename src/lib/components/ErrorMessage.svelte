@@ -1,5 +1,5 @@
 <script lang="ts">
-	import alertCircleIcon from '$lib/components/icons/AlertCircleIcon.svg?raw';
+	import Icon from '$lib/components/icons/Icon.svelte';
 
 	interface Props {
 		message: string | null;
@@ -10,7 +10,7 @@
 
 {#if message}
 	<div class="error animate-fade-in">
-		<span class="error-icon">{@html alertCircleIcon}</span>
+		<Icon name="alert-circle" size={20} />
 		<span>{message}</span>
 	</div>
 {/if}
@@ -18,8 +18,9 @@
 <style>
 	.error {
 		display: flex;
-		align-items: flex-start;
+		align-items: center;
 		gap: var(--space-3);
+		--color-ink: var(--error-500);
 		padding: var(--space-4);
 		background-color: var(--error-50);
 		color: var(--error-700);
@@ -28,15 +29,6 @@
 		border-radius: var(--radius-lg);
 		font-size: var(--font-size-sm);
 		line-height: var(--line-height-relaxed);
-	}
-
-	.error-icon {
-		display: inline-flex;
-		width: 20px;
-		height: 20px;
-		flex-shrink: 0;
-		margin-top: 2px;
-		--color-ink: var(--error-500);
 	}
 
 	.error span:last-child {

@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { viewPreferences, type ViewMode } from '$lib/stores/viewPreferences';
-	import gridIcon from '$lib/components/icons/GridIcon.svg?raw';
-	import listIcon from '$lib/components/icons/ListIcon.svg?raw';
+	import Icon from '$lib/components/icons/Icon.svelte';
 
 	const prefs = $derived($viewPreferences);
 
@@ -17,7 +16,7 @@
 		onclick={() => setView('grid')}
 		title="Grid view"
 	>
-		<span class="btn-icon">{@html gridIcon}</span>
+		<Icon name="grid" size={16} />
 	</button>
 
 	<button
@@ -26,7 +25,7 @@
 		onclick={() => setView('list')}
 		title="List view"
 	>
-		<span class="btn-icon">{@html listIcon}</span>
+		<Icon name="list" size={16} />
 	</button>
 
 	<button
@@ -35,7 +34,7 @@
 		onclick={() => setView('compact')}
 		title="Compact view"
 	>
-		<span class="btn-icon">{@html gridIcon}</span>
+		<Icon name="grid" size={16} />
 	</button>
 </div>
 
@@ -69,9 +68,5 @@
 		box-shadow: var(--shadow-xs);
 	}
 
-	.btn-icon {
-		display: inline-flex;
-		width: 16px;
-		height: 16px;
-	}
+
 </style>

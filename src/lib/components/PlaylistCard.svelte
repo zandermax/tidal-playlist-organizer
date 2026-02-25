@@ -2,10 +2,7 @@
 	import type { Playlist } from '$lib/types/tidal';
 	import { formatDate } from '$lib/utils/tidal-utils';
 	import type { ViewMode } from '$lib/stores/viewPreferences';
-	import musicNoteIcon from '$lib/components/icons/MusicNoteIcon.svg?raw';
-	import editIcon from '$lib/components/icons/EditIcon.svg?raw';
-	import folderIcon from '$lib/components/icons/FolderIcon.svg?raw';
-	import shareIcon from '$lib/components/icons/ShareIcon.svg?raw';
+	import Icon from '$lib/components/icons/Icon.svelte';
 
 	interface Props {
 		playlist: Playlist;
@@ -80,7 +77,7 @@
 				<img src={coverUrl} alt={attrs.name} loading="lazy" />
 			{:else}
 				<div class="cover-placeholder">
-					<span class="cover-icon">{@html musicNoteIcon}</span>
+					<Icon name="music-note" size={48} />
 				</div>
 			{/if}
 		</div>
@@ -92,7 +89,7 @@
 				{#if viewMode === 'grid'}
 					<div class="playlist-meta">
 						<span class="meta-item">
-							<span class="meta-icon">{@html musicNoteIcon}</span>
+							<Icon name="music-note" size={14} />
 							{trackCount} tracks
 						</span>
 					</div>
@@ -126,13 +123,13 @@
 
 	<div class="card-actions">
 		<button class="action-button" title="Edit playlist" onclick={(e) => e.stopPropagation()}>
-			<span class="btn-icon">{@html editIcon}</span>
+			<Icon name="edit" size={16} />
 		</button>
 		<button class="action-button" title="Add to folder" onclick={(e) => e.stopPropagation()}>
-			<span class="btn-icon">{@html folderIcon}</span>
+			<Icon name="folder" size={16} />
 		</button>
 		<button class="action-button" title="Share" onclick={(e) => e.stopPropagation()}>
-			<span class="btn-icon">{@html shareIcon}</span>
+			<Icon name="share" size={16} />
 		</button>
 	</div>
 </div>
@@ -292,12 +289,6 @@
 		background: linear-gradient(135deg, var(--primary-100) 0%, var(--primary-200) 100%);
 	}
 
-	.cover-icon {
-		display: inline-flex;
-		width: 48px;
-		height: 48px;
-	}
-
 	/* Info */
 	.playlist-info {
 		padding: var(--space-4);
@@ -327,13 +318,6 @@
 		gap: var(--space-1);
 		font-size: var(--font-size-sm);
 		color: var(--text-secondary);
-	}
-
-	.meta-icon {
-		display: inline-flex;
-		width: 14px;
-		height: 14px;
-		flex-shrink: 0;
 	}
 
 	.playlist-date {
@@ -425,12 +409,6 @@
 		color: var(--text-primary);
 		background-color: var(--bg-hover);
 		border-color: var(--border-strong);
-	}
-
-	.btn-icon {
-		display: inline-flex;
-		width: 16px;
-		height: 16px;
 	}
 
 	@media (max-width: 768px) {

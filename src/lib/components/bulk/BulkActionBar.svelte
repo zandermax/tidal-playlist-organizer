@@ -1,10 +1,5 @@
 <script lang="ts">
-	import checkboxCheckIcon from '$lib/components/icons/CheckboxCheckIcon.svg?raw';
-	import folderIcon from '$lib/components/icons/FolderIcon.svg?raw';
-	import tagIcon from '$lib/components/icons/TagIcon.svg?raw';
-	import exportIcon from '$lib/components/icons/ExportIcon.svg?raw';
-	import trashIcon from '$lib/components/icons/TrashIcon.svg?raw';
-	import closeIcon from '$lib/components/icons/CloseIcon.svg?raw';
+	import Icon from '$lib/components/icons/Icon.svelte';
 
 	interface Props {
 		selectedCount: number;
@@ -30,7 +25,7 @@
 	<div class="bulk-action-bar animate-slide-in">
 		<div class="bar-content">
 			<div class="selection-info">
-				<span class="selection-icon">{@html checkboxCheckIcon}</span>
+				<Icon name="checkbox-check" size={20} />
 				<span class="count"
 					>{selectedCount} {selectedCount === 1 ? 'playlist' : 'playlists'} selected</span
 				>
@@ -43,28 +38,28 @@
 						onclick={() => handleAction(onAddToFolder)}
 						title="Add to folder"
 					>
-						<span class="btn-icon">{@html folderIcon}</span>
+						<Icon name="folder" size={18} />
 						<span>Add to Folder</span>
 					</button>
 				{/if}
 
 				{#if onAddTags}
 					<button class="action-btn" onclick={() => handleAction(onAddTags)} title="Add tags">
-						<span class="btn-icon">{@html tagIcon}</span>
+						<Icon name="tag" size={18} />
 						<span>Add Tags</span>
 					</button>
 				{/if}
 
 				{#if onExport}
 					<button class="action-btn" onclick={() => handleAction(onExport)} title="Export">
-						<span class="btn-icon">{@html exportIcon}</span>
+						<Icon name="export" size={18} />
 						<span>Export</span>
 					</button>
 				{/if}
 
 				{#if onDelete}
 					<button class="action-btn danger" onclick={() => handleAction(onDelete)} title="Delete">
-						<span class="btn-icon">{@html trashIcon}</span>
+						<Icon name="trash" size={18} />
 						<span>Delete</span>
 					</button>
 				{/if}
@@ -72,7 +67,7 @@
 				<div class="divider"></div>
 
 				<button class="action-btn" onclick={onClear} title="Clear selection">
-					<span class="btn-icon">{@html closeIcon}</span>
+					<Icon name="close" size={18} />
 					<span>Clear</span>
 				</button>
 			</div>
@@ -109,13 +104,6 @@
 		gap: var(--space-3);
 		color: var(--text-primary);
 		--color-ink: var(--primary-600);
-	}
-
-	.selection-icon {
-		display: inline-flex;
-		width: 20px;
-		height: 20px;
-		flex-shrink: 0;
 	}
 
 	.count {
@@ -157,13 +145,6 @@
 	.action-btn.danger:hover {
 		color: var(--error-700);
 		background-color: var(--error-50);
-	}
-
-	.btn-icon {
-		display: inline-flex;
-		width: 18px;
-		height: 18px;
-		flex-shrink: 0;
 	}
 
 	.divider {

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import closeIcon from '$lib/components/icons/CloseIcon.svg?raw';
+	import Icon from '$lib/components/icons/Icon.svelte';
 
 	export interface FilterState {
 		dateRange: string;
@@ -74,7 +74,7 @@
 		<div class="panel-header">
 			<h3>Filters</h3>
 			<button class="close-button" onclick={handleClose}>
-				<span class="btn-icon">{@html closeIcon}</span>
+				<Icon name="close" size={20} />
 			</button>
 		</div>
 
@@ -220,12 +220,6 @@
 	.close-button:hover {
 		color: var(--text-primary);
 		background-color: var(--bg-hover);
-	}
-
-	.btn-icon {
-		display: inline-flex;
-		width: 20px;
-		height: 20px;
 	}
 
 	.panel-content {

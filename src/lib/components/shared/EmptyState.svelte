@@ -1,29 +1,29 @@
 <script lang="ts">
-	import musicNoteIcon from '$lib/components/icons/MusicNoteIcon.svg?raw';
-	import searchIcon from '$lib/components/icons/SearchIcon.svg?raw';
-	import folderIcon from '$lib/components/icons/FolderIcon.svg?raw';
-	import filterIcon from '$lib/components/icons/FilterIcon.svg?raw';
+	import Icon from '$lib/components/icons/Icon.svelte';
+	import type { IconName } from '$lib/components/icons/icons.js';
+
+	type EmptyStateIcon = 'music' | 'search' | 'folder' | 'filter';
 
 	interface Props {
 		title: string;
 		description?: string;
-		icon?: 'music' | 'search' | 'folder' | 'filter';
+		icon?: EmptyStateIcon;
 		actionLabel?: string;
 		onAction?: () => void;
 	}
 
 	let { title, description, icon = 'music', actionLabel, onAction }: Props = $props();
 
-	const iconMap: Record<string, string> = {
-		music: musicNoteIcon,
-		search: searchIcon,
-		folder: folderIcon,
-		filter: filterIcon
+	const iconMap: Record<EmptyStateIcon, IconName> = {
+		music: 'music-note',
+		search: 'search',
+		folder: 'folder',
+		filter: 'filter'
 	};
 </script>
 
 <div class="empty-state animate-fade-in">
-	<span class="empty-icon">{@html iconMap[icon]}</span>
+	<span class="empty-icon"><Icon name={iconMap[icon]} size={64} /></span>
 	<h3 class="empty-title">{title}</h3>
 	{#if description}
 		<p class="empty-description">{description}</p>
@@ -47,9 +47,6 @@
 	}
 
 	.empty-icon {
-		display: inline-flex;
-		width: 64px;
-		height: 64px;
 		color: var(--text-tertiary);
 		opacity: 0.5;
 		margin-bottom: var(--space-6);

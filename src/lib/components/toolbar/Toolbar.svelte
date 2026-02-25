@@ -3,9 +3,7 @@
 	import SearchBar from './SearchBar.svelte';
 	import FilterPanel, { type FilterState } from './FilterPanel.svelte';
 	import { viewPreferences, type SortOption } from '$lib/stores/viewPreferences';
-	import arrowDownIcon from '$lib/components/icons/ArrowDownIcon.svg?raw';
-	import arrowUpIcon from '$lib/components/icons/ArrowUpIcon.svg?raw';
-	import filterIcon from '$lib/components/icons/FilterIcon.svg?raw';
+	import Icon from '$lib/components/icons/Icon.svelte';
 
 	interface Props {
 		onSearch?: (value: string) => void;
@@ -66,15 +64,15 @@
 				title="Toggle sort direction"
 			>
 				{#if prefs.sortDirection === 'asc'}
-					<span class="btn-icon">{@html arrowDownIcon}</span>
+					<Icon name="arrow-down" size={16} />
 				{:else}
-					<span class="btn-icon">{@html arrowUpIcon}</span>
+					<Icon name="arrow-up" size={16} />
 				{/if}
 			</button>
 		</div>
 
 		<button class="filter-button btn-ghost" onclick={openFilters}>
-			<span class="btn-icon">{@html filterIcon}</span>
+			<Icon name="filter" size={16} />
 			Filters
 		</button>
 
@@ -167,13 +165,6 @@
 	.filter-button:hover {
 		color: var(--text-primary);
 		border-color: var(--border-strong);
-	}
-
-	.btn-icon {
-		display: inline-flex;
-		width: 16px;
-		height: 16px;
-		flex-shrink: 0;
 	}
 
 	@media (max-width: 1024px) {

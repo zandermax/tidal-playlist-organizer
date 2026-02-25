@@ -1,6 +1,5 @@
 <script lang="ts">
-	import searchIcon from '$lib/components/icons/SearchIcon.svg?raw';
-	import closeIcon from '$lib/components/icons/CloseIcon.svg?raw';
+	import Icon from '$lib/components/icons/Icon.svelte';
 
 	interface Props {
 		value?: string;
@@ -39,7 +38,7 @@
 </script>
 
 <div class="search-bar">
-	<span class="search-icon">{@html searchIcon}</span>
+	<span class="search-icon"><Icon name="search" size={16} /></span>
 	<input
 		type="search"
 		class="search-input"
@@ -50,7 +49,7 @@
 	/>
 	{#if value}
 		<button class="clear-button" onclick={clearSearch} type="button">
-			<span class="clear-icon">{@html closeIcon}</span>
+			<Icon name="close" size={14} />
 		</button>
 	{/if}
 </div>
@@ -65,13 +64,11 @@
 	}
 
 	.search-icon {
-		display: inline-flex;
-		width: 16px;
-		height: 16px;
 		position: absolute;
 		left: var(--space-3);
 		color: var(--text-tertiary);
 		pointer-events: none;
+		display: flex;
 	}
 
 	.search-input {
@@ -116,9 +113,5 @@
 		background-color: var(--bg-hover);
 	}
 
-	.clear-icon {
-		display: inline-flex;
-		width: 14px;
-		height: 14px;
-	}
+
 </style>

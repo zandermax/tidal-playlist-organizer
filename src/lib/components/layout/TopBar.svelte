@@ -1,8 +1,6 @@
 <script lang="ts">
 	import { authStore } from '$lib/stores/auth';
-	import musicNoteIcon from '$lib/components/icons/MusicNoteIcon.svg?raw';
-	import searchIcon from '$lib/components/icons/SearchIcon.svg?raw';
-	import logoutIcon from '$lib/components/icons/LogoutIcon.svg?raw';
+	import Icon from '$lib/components/icons/Icon.svelte';
 
 	const auth = $derived($authStore);
 
@@ -21,14 +19,14 @@
 	<div class="topbar-content">
 		<div class="topbar-left">
 			<div class="logo">
-				<span class="logo-icon">{@html musicNoteIcon}</span>
+				<Icon name="music-note" size={24} />
 				<span class="logo-text">Tidal Library</span>
 			</div>
 		</div>
 
 		<div class="topbar-center">
 			<div class="search-container">
-				<span class="search-icon">{@html searchIcon}</span>
+				<span class="search-icon"><Icon name="search" size={16} /></span>
 				<input
 					type="search"
 					placeholder="Search playlists..."
@@ -42,7 +40,7 @@
 			{#if auth.isAuthenticated}
 				<div class="user-menu">
 					<button class="user-button" onclick={handleLogout}>
-						<span class="btn-icon">{@html logoutIcon}</span>
+						<Icon name="logout" size={16} />
 						Logout
 					</button>
 				</div>
@@ -86,12 +84,6 @@
 		--color-ink: var(--primary-500);
 	}
 
-	.logo-icon {
-		display: inline-flex;
-		width: 24px;
-		height: 24px;
-	}
-
 	.logo-text {
 		white-space: nowrap;
 	}
@@ -107,15 +99,13 @@
 	}
 
 	.search-icon {
-		display: inline-flex;
-		width: 16px;
-		height: 16px;
 		position: absolute;
 		left: var(--space-3);
 		top: 50%;
 		transform: translateY(-50%);
 		color: var(--text-tertiary);
 		pointer-events: none;
+		display: flex;
 	}
 
 	.search-input {
@@ -171,12 +161,6 @@
 	.user-button:hover {
 		color: var(--text-primary);
 		background-color: var(--bg-hover);
-	}
-
-	.btn-icon {
-		display: inline-flex;
-		width: 16px;
-		height: 16px;
 	}
 
 	@media (max-width: 768px) {
