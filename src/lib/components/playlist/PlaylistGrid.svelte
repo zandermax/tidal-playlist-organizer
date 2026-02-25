@@ -2,6 +2,7 @@
 	import PlaylistCard from '../PlaylistCard.svelte';
 	import type { Playlist } from '$lib/types/tidal';
 	import type { ViewMode } from '$lib/stores/viewPreferences';
+	import musicNoteIcon from '$lib/components/icons/MusicNoteIcon.svg?raw';
 
 	interface Props {
 		playlists: Playlist[];
@@ -48,14 +49,7 @@
 	</div>
 {:else if playlists.length === 0}
 	<div class="empty-message">
-		<svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-			<path
-				d="M9 18V5l12-2v13M9 13c0 1.66-1.34 3-3 3s-3-1.34-3-3 1.34-3 3-3 3 1.34 3 3z"
-				stroke-width="2"
-				stroke-linecap="round"
-				stroke-linejoin="round"
-			/>
-		</svg>
+		<span class="empty-icon">{@html musicNoteIcon}</span>
 		<h3>No playlists found</h3>
 		<p>Try adjusting your search or filters</p>
 	</div>
@@ -159,7 +153,10 @@
 		color: var(--text-tertiary);
 	}
 
-	.empty-message svg {
+	.empty-icon {
+		display: inline-flex;
+		width: 64px;
+		height: 64px;
 		margin-bottom: var(--space-6);
 		opacity: 0.5;
 	}

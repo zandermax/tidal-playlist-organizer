@@ -2,6 +2,10 @@
 	import type { Playlist } from '$lib/types/tidal';
 	import { formatDate } from '$lib/utils/tidal-utils';
 	import type { ViewMode } from '$lib/stores/viewPreferences';
+	import musicNoteIcon from '$lib/components/icons/MusicNoteIcon.svg?raw';
+	import editIcon from '$lib/components/icons/EditIcon.svg?raw';
+	import folderIcon from '$lib/components/icons/FolderIcon.svg?raw';
+	import shareIcon from '$lib/components/icons/ShareIcon.svg?raw';
 
 	interface Props {
 		playlist: Playlist;
@@ -76,14 +80,7 @@
 				<img src={coverUrl} alt={attrs.name} loading="lazy" />
 			{:else}
 				<div class="cover-placeholder">
-					<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-						<path
-							d="M9 18V5l12-2v13M9 13c0 1.66-1.34 3-3 3s-3-1.34-3-3 1.34-3 3-3 3 1.34 3 3z"
-							stroke-width="2"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-						/>
-					</svg>
+					<span class="cover-icon">{@html musicNoteIcon}</span>
 				</div>
 			{/if}
 		</div>
@@ -95,14 +92,7 @@
 				{#if viewMode === 'grid'}
 					<div class="playlist-meta">
 						<span class="meta-item">
-							<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-								<path
-									d="M9 18V5l12-2v13M9 13c0 1.66-1.34 3-3 3s-3-1.34-3-3 1.34-3 3-3 3 1.34 3 3z"
-									stroke-width="2"
-									stroke-linecap="round"
-									stroke-linejoin="round"
-								/>
-							</svg>
+							<span class="meta-icon">{@html musicNoteIcon}</span>
 							{trackCount} tracks
 						</span>
 					</div>
@@ -136,39 +126,13 @@
 
 	<div class="card-actions">
 		<button class="action-button" title="Edit playlist" onclick={(e) => e.stopPropagation()}>
-			<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-				<path
-					d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
-					stroke-width="2"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-				/>
-				<path
-					d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"
-					stroke-width="2"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-				/>
-			</svg>
+			<span class="btn-icon">{@html editIcon}</span>
 		</button>
 		<button class="action-button" title="Add to folder" onclick={(e) => e.stopPropagation()}>
-			<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-				<path
-					d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"
-					stroke-width="2"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-				/>
-			</svg>
+			<span class="btn-icon">{@html folderIcon}</span>
 		</button>
 		<button class="action-button" title="Share" onclick={(e) => e.stopPropagation()}>
-			<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-				<circle cx="18" cy="5" r="3" stroke-width="2" />
-				<circle cx="6" cy="12" r="3" stroke-width="2" />
-				<circle cx="18" cy="19" r="3" stroke-width="2" />
-				<line x1="8.59" y1="13.51" x2="15.42" y2="17.49" stroke-width="2" />
-				<line x1="15.41" y1="6.51" x2="8.59" y2="10.49" stroke-width="2" />
-			</svg>
+			<span class="btn-icon">{@html shareIcon}</span>
 		</button>
 	</div>
 </div>
@@ -328,6 +292,12 @@
 		background: linear-gradient(135deg, var(--primary-100) 0%, var(--primary-200) 100%);
 	}
 
+	.cover-icon {
+		display: inline-flex;
+		width: 48px;
+		height: 48px;
+	}
+
 	/* Info */
 	.playlist-info {
 		padding: var(--space-4);
@@ -357,6 +327,13 @@
 		gap: var(--space-1);
 		font-size: var(--font-size-sm);
 		color: var(--text-secondary);
+	}
+
+	.meta-icon {
+		display: inline-flex;
+		width: 14px;
+		height: 14px;
+		flex-shrink: 0;
 	}
 
 	.playlist-date {
@@ -448,6 +425,12 @@
 		color: var(--text-primary);
 		background-color: var(--bg-hover);
 		border-color: var(--border-strong);
+	}
+
+	.btn-icon {
+		display: inline-flex;
+		width: 16px;
+		height: 16px;
 	}
 
 	@media (max-width: 768px) {

@@ -1,5 +1,9 @@
 <script lang="ts">
 	import type { Playlist } from '$lib/types/tidal';
+	import folderIcon from '$lib/components/icons/FolderIcon.svg?raw';
+	import musicNoteIcon from '$lib/components/icons/MusicNoteIcon.svg?raw';
+	import clockIcon from '$lib/components/icons/ClockIcon.svg?raw';
+	import calendarIcon from '$lib/components/icons/CalendarIcon.svg?raw';
 
 	interface Props {
 		playlists: Playlist[];
@@ -44,14 +48,7 @@
 <div class="stats-cards">
 	<div class="stat-card">
 		<div class="stat-icon">
-			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-				<path
-					d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"
-					stroke-width="2"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-				/>
-			</svg>
+			<span class="icon">{@html folderIcon}</span>
 		</div>
 		<div class="stat-content">
 			<div class="stat-label">Playlists</div>
@@ -61,14 +58,7 @@
 
 	<div class="stat-card">
 		<div class="stat-icon">
-			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-				<path
-					d="M9 18V5l12-2v13M9 13c0 1.66-1.34 3-3 3s-3-1.34-3-3 1.34-3 3-3 3 1.34 3 3z"
-					stroke-width="2"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-				/>
-			</svg>
+			<span class="icon">{@html musicNoteIcon}</span>
 		</div>
 		<div class="stat-content">
 			<div class="stat-label">Total Tracks</div>
@@ -78,15 +68,7 @@
 
 	<div class="stat-card">
 		<div class="stat-icon">
-			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-				<circle cx="12" cy="12" r="10" stroke-width="2" />
-				<polyline
-					points="12 6 12 12 16 14"
-					stroke-width="2"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-				/>
-			</svg>
+			<span class="icon">{@html clockIcon}</span>
 		</div>
 		<div class="stat-content">
 			<div class="stat-label">Est. Duration</div>
@@ -96,12 +78,7 @@
 
 	<div class="stat-card">
 		<div class="stat-icon">
-			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-				<rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke-width="2" />
-				<line x1="16" y1="2" x2="16" y2="6" stroke-width="2" stroke-linecap="round" />
-				<line x1="8" y1="2" x2="8" y2="6" stroke-width="2" stroke-linecap="round" />
-				<line x1="3" y1="10" x2="21" y2="10" stroke-width="2" />
-			</svg>
+			<span class="icon">{@html calendarIcon}</span>
 		</div>
 		<div class="stat-content">
 			<div class="stat-label">Last Updated</div>
@@ -144,6 +121,12 @@
 		color: var(--primary-600);
 		border-radius: var(--radius-lg);
 		flex-shrink: 0;
+	}
+
+	.icon {
+		display: inline-flex;
+		width: 24px;
+		height: 24px;
 	}
 
 	.stat-content {

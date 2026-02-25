@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { TAG_COLORS } from '$lib/stores/organization';
+	import closeIcon from '$lib/components/icons/CloseIcon.svg?raw';
 
 	interface Props {
 		label: string;
@@ -30,10 +31,7 @@
 	<span class="tag-label">{label}</span>
 	{#if removable}
 		<button class="tag-remove" onclick={handleRemove} type="button">
-			<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-				<line x1="18" y1="6" x2="6" y2="18" stroke-width="2" stroke-linecap="round" />
-				<line x1="6" y1="6" x2="18" y2="18" stroke-width="2" stroke-linecap="round" />
-			</svg>
+			<span class="remove-icon">{@html closeIcon}</span>
 		</button>
 	{/if}
 </span>
@@ -77,5 +75,11 @@
 	.tag-remove:hover {
 		opacity: 1;
 		background-color: rgba(0, 0, 0, 0.1);
+	}
+
+	.remove-icon {
+		display: inline-flex;
+		width: 12px;
+		height: 12px;
 	}
 </style>

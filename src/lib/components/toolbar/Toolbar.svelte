@@ -3,6 +3,9 @@
 	import SearchBar from './SearchBar.svelte';
 	import FilterPanel, { type FilterState } from './FilterPanel.svelte';
 	import { viewPreferences, type SortOption } from '$lib/stores/viewPreferences';
+	import arrowDownIcon from '$lib/components/icons/ArrowDownIcon.svg?raw';
+	import arrowUpIcon from '$lib/components/icons/ArrowUpIcon.svg?raw';
+	import filterIcon from '$lib/components/icons/FilterIcon.svg?raw';
 
 	interface Props {
 		onSearch?: (value: string) => void;
@@ -63,36 +66,15 @@
 				title="Toggle sort direction"
 			>
 				{#if prefs.sortDirection === 'asc'}
-					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-						<path
-							d="M12 5v14M19 12l-7 7-7-7"
-							stroke-width="2"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-						/>
-					</svg>
+					<span class="btn-icon">{@html arrowDownIcon}</span>
 				{:else}
-					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-						<path
-							d="M12 19V5M5 12l7-7 7 7"
-							stroke-width="2"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-						/>
-					</svg>
+					<span class="btn-icon">{@html arrowUpIcon}</span>
 				{/if}
 			</button>
 		</div>
 
 		<button class="filter-button btn-ghost" onclick={openFilters}>
-			<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-				<polygon
-					points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"
-					stroke-width="2"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-				/>
-			</svg>
+			<span class="btn-icon">{@html filterIcon}</span>
 			Filters
 		</button>
 
@@ -185,6 +167,13 @@
 	.filter-button:hover {
 		color: var(--text-primary);
 		border-color: var(--border-strong);
+	}
+
+	.btn-icon {
+		display: inline-flex;
+		width: 16px;
+		height: 16px;
+		flex-shrink: 0;
 	}
 
 	@media (max-width: 1024px) {

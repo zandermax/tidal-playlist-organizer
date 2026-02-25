@@ -1,6 +1,9 @@
 <script lang="ts">
 	import { authStore } from '$lib/stores/auth';
 	import ErrorMessage from './ErrorMessage.svelte';
+	import SpinnerIcon from '$lib/components/icons/SpinnerIcon.svelte';
+	import musicNoteIcon from '$lib/components/icons/MusicNoteIcon.svg?raw';
+	import infoIcon from '$lib/components/icons/InfoIcon.svg?raw';
 
 	let isLoggingIn = $state(false);
 	let error = $state<string | null>(null);
@@ -20,14 +23,7 @@
 <div class="login-container">
 	<div class="login-card animate-fade-in-up">
 		<div class="login-icon">
-			<svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-				<path
-					d="M9 18V5l12-2v13M9 13c0 1.66-1.34 3-3 3s-3-1.34-3-3 1.34-3 3-3 3 1.34 3 3z"
-					stroke-width="2"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-				/>
-			</svg>
+			<span class="hero-icon">{@html musicNoteIcon}</span>
 		</div>
 
 		<h1>Welcome to Tidal Library</h1>
@@ -42,33 +38,10 @@
 			class="btn btn-primary btn-lg login-button"
 		>
 			{#if isLoggingIn}
-				<svg
-					class="spinner"
-					width="20"
-					height="20"
-					viewBox="0 0 24 24"
-					fill="none"
-					stroke="currentColor"
-				>
-					<circle
-						cx="12"
-						cy="12"
-						r="10"
-						stroke-width="3"
-						stroke-dasharray="32"
-						stroke-dashoffset="8"
-					/>
-				</svg>
+				<span class="spinner"><SpinnerIcon /></span>
 				Connecting...
 			{:else}
-				<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-					<path
-						d="M9 18V5l12-2v13M9 13c0 1.66-1.34 3-3 3s-3-1.34-3-3 1.34-3 3-3 3 1.34 3 3z"
-						stroke-width="2"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-					/>
-				</svg>
+				<span class="btn-icon">{@html musicNoteIcon}</span>
 				Login with Tidal
 			{/if}
 		</button>
@@ -80,11 +53,7 @@
 		{/if}
 
 		<div class="info-box">
-			<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-				<circle cx="12" cy="12" r="10" stroke-width="2" />
-				<line x1="12" y1="16" x2="12" y2="12" stroke-width="2" stroke-linecap="round" />
-				<line x1="12" y1="8" x2="12.01" y2="8" stroke-width="2" stroke-linecap="round" />
-			</svg>
+			<span class="info-icon">{@html infoIcon}</span>
 			<p>
 				You'll need a Tidal account and API credentials from the
 				<a href="https://developer.tidal.com" target="_blank" class="info-link">
@@ -127,6 +96,12 @@
 		border-radius: var(--radius-2xl);
 	}
 
+	.hero-icon {
+		display: inline-flex;
+		width: 64px;
+		height: 64px;
+	}
+
 	h1 {
 		font-size: var(--font-size-3xl);
 		font-weight: var(--font-weight-bold);
@@ -147,7 +122,15 @@
 	}
 
 	.spinner {
-		animation: spin 1s linear infinite;
+		display: inline-flex;
+		width: 20px;
+		height: 20px;
+	}
+
+	.btn-icon {
+		display: inline-flex;
+		width: 20px;
+		height: 20px;
 	}
 
 	.error-container {
@@ -162,11 +145,14 @@
 		border: 1px solid var(--primary-200);
 		border-radius: var(--radius-lg);
 		text-align: left;
+		--color-ink: var(--primary-600);
 	}
 
-	.info-box svg {
+	.info-icon {
+		display: inline-flex;
+		width: 16px;
+		height: 16px;
 		flex-shrink: 0;
-		color: var(--primary-600);
 		margin-top: 2px;
 	}
 
@@ -207,7 +193,7 @@
 			height: 80px;
 		}
 
-		.login-icon svg {
+		.hero-icon {
 			width: 48px;
 			height: 48px;
 		}

@@ -1,4 +1,7 @@
 <script lang="ts">
+	import searchIcon from '$lib/components/icons/SearchIcon.svg?raw';
+	import closeIcon from '$lib/components/icons/CloseIcon.svg?raw';
+
 	interface Props {
 		value?: string;
 		onSearch?: (value: string) => void;
@@ -36,10 +39,7 @@
 </script>
 
 <div class="search-bar">
-	<svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none">
-		<circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2" />
-		<path d="m21 21-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-	</svg>
+	<span class="search-icon">{@html searchIcon}</span>
 	<input
 		type="search"
 		class="search-input"
@@ -50,10 +50,7 @@
 	/>
 	{#if value}
 		<button class="clear-button" onclick={clearSearch} type="button">
-			<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-				<line x1="18" y1="6" x2="6" y2="18" stroke-width="2" stroke-linecap="round" />
-				<line x1="6" y1="6" x2="18" y2="18" stroke-width="2" stroke-linecap="round" />
-			</svg>
+			<span class="clear-icon">{@html closeIcon}</span>
 		</button>
 	{/if}
 </div>
@@ -68,6 +65,9 @@
 	}
 
 	.search-icon {
+		display: inline-flex;
+		width: 16px;
+		height: 16px;
 		position: absolute;
 		left: var(--space-3);
 		color: var(--text-tertiary);
@@ -114,5 +114,11 @@
 	.clear-button:hover {
 		color: var(--text-primary);
 		background-color: var(--bg-hover);
+	}
+
+	.clear-icon {
+		display: inline-flex;
+		width: 14px;
+		height: 14px;
 	}
 </style>

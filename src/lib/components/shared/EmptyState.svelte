@@ -1,4 +1,9 @@
 <script lang="ts">
+	import musicNoteIcon from '$lib/components/icons/MusicNoteIcon.svg?raw';
+	import searchIcon from '$lib/components/icons/SearchIcon.svg?raw';
+	import folderIcon from '$lib/components/icons/FolderIcon.svg?raw';
+	import filterIcon from '$lib/components/icons/FilterIcon.svg?raw';
+
 	interface Props {
 		title: string;
 		description?: string;
@@ -9,27 +14,16 @@
 
 	let { title, description, icon = 'music', actionLabel, onAction }: Props = $props();
 
-	const icons = {
-		music: `<svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-			<path d="M9 18V5l12-2v13M9 13c0 1.66-1.34 3-3 3s-3-1.34-3-3 1.34-3 3-3 3 1.34 3 3z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-		</svg>`,
-		search: `<svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-			<circle cx="11" cy="11" r="8" stroke-width="2"/>
-			<path d="m21 21-4.35-4.35" stroke-width="2" stroke-linecap="round"/>
-		</svg>`,
-		folder: `<svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-			<path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-		</svg>`,
-		filter: `<svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-			<polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-		</svg>`
+	const iconMap: Record<string, string> = {
+		music: musicNoteIcon,
+		search: searchIcon,
+		folder: folderIcon,
+		filter: filterIcon
 	};
 </script>
 
 <div class="empty-state animate-fade-in">
-	<div class="empty-icon">
-		{@html icons[icon]}
-	</div>
+	<span class="empty-icon">{@html iconMap[icon]}</span>
 	<h3 class="empty-title">{title}</h3>
 	{#if description}
 		<p class="empty-description">{description}</p>
@@ -53,6 +47,9 @@
 	}
 
 	.empty-icon {
+		display: inline-flex;
+		width: 64px;
+		height: 64px;
 		color: var(--text-tertiary);
 		opacity: 0.5;
 		margin-bottom: var(--space-6);

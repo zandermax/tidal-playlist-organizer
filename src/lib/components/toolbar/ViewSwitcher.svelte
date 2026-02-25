@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { viewPreferences, type ViewMode } from '$lib/stores/viewPreferences';
+	import gridIcon from '$lib/components/icons/GridIcon.svg?raw';
+	import listIcon from '$lib/components/icons/ListIcon.svg?raw';
 
 	const prefs = $derived($viewPreferences);
 
@@ -15,12 +17,7 @@
 		onclick={() => setView('grid')}
 		title="Grid view"
 	>
-		<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-			<rect x="3" y="3" width="7" height="7" stroke-width="2" rx="1" />
-			<rect x="14" y="3" width="7" height="7" stroke-width="2" rx="1" />
-			<rect x="14" y="14" width="7" height="7" stroke-width="2" rx="1" />
-			<rect x="3" y="14" width="7" height="7" stroke-width="2" rx="1" />
-		</svg>
+		<span class="btn-icon">{@html gridIcon}</span>
 	</button>
 
 	<button
@@ -29,14 +26,7 @@
 		onclick={() => setView('list')}
 		title="List view"
 	>
-		<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-			<line x1="8" y1="6" x2="21" y2="6" stroke-width="2" stroke-linecap="round" />
-			<line x1="8" y1="12" x2="21" y2="12" stroke-width="2" stroke-linecap="round" />
-			<line x1="8" y1="18" x2="21" y2="18" stroke-width="2" stroke-linecap="round" />
-			<line x1="3" y1="6" x2="3.01" y2="6" stroke-width="2" stroke-linecap="round" />
-			<line x1="3" y1="12" x2="3.01" y2="12" stroke-width="2" stroke-linecap="round" />
-			<line x1="3" y1="18" x2="3.01" y2="18" stroke-width="2" stroke-linecap="round" />
-		</svg>
+		<span class="btn-icon">{@html listIcon}</span>
 	</button>
 
 	<button
@@ -45,12 +35,7 @@
 		onclick={() => setView('compact')}
 		title="Compact view"
 	>
-		<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-			<rect x="3" y="3" width="7" height="7" stroke-width="2" rx="1" />
-			<rect x="14" y="3" width="7" height="7" stroke-width="2" rx="1" />
-			<rect x="14" y="14" width="7" height="7" stroke-width="2" rx="1" />
-			<rect x="3" y="14" width="7" height="7" stroke-width="2" rx="1" />
-		</svg>
+		<span class="btn-icon">{@html gridIcon}</span>
 	</button>
 </div>
 
@@ -82,5 +67,11 @@
 		color: var(--primary-600);
 		background-color: var(--bg-surface);
 		box-shadow: var(--shadow-xs);
+	}
+
+	.btn-icon {
+		display: inline-flex;
+		width: 16px;
+		height: 16px;
 	}
 </style>

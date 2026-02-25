@@ -1,4 +1,11 @@
 <script lang="ts">
+	import checkboxCheckIcon from '$lib/components/icons/CheckboxCheckIcon.svg?raw';
+	import folderIcon from '$lib/components/icons/FolderIcon.svg?raw';
+	import tagIcon from '$lib/components/icons/TagIcon.svg?raw';
+	import exportIcon from '$lib/components/icons/ExportIcon.svg?raw';
+	import trashIcon from '$lib/components/icons/TrashIcon.svg?raw';
+	import closeIcon from '$lib/components/icons/CloseIcon.svg?raw';
+
 	interface Props {
 		selectedCount: number;
 		onClear: () => void;
@@ -23,20 +30,7 @@
 	<div class="bulk-action-bar animate-slide-in">
 		<div class="bar-content">
 			<div class="selection-info">
-				<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-					<polyline
-						points="9 11 12 14 22 4"
-						stroke-width="2"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-					/>
-					<path
-						d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"
-						stroke-width="2"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-					/>
-				</svg>
+				<span class="selection-icon">{@html checkboxCheckIcon}</span>
 				<span class="count"
 					>{selectedCount} {selectedCount === 1 ? 'playlist' : 'playlists'} selected</span
 				>
@@ -49,63 +43,28 @@
 						onclick={() => handleAction(onAddToFolder)}
 						title="Add to folder"
 					>
-						<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-							<path
-								d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"
-								stroke-width="2"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-							/>
-						</svg>
+						<span class="btn-icon">{@html folderIcon}</span>
 						<span>Add to Folder</span>
 					</button>
 				{/if}
 
 				{#if onAddTags}
 					<button class="action-btn" onclick={() => handleAction(onAddTags)} title="Add tags">
-						<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-							<path
-								d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"
-								stroke-width="2"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-							/>
-							<line x1="7" y1="7" x2="7.01" y2="7" stroke-width="2" stroke-linecap="round" />
-						</svg>
+						<span class="btn-icon">{@html tagIcon}</span>
 						<span>Add Tags</span>
 					</button>
 				{/if}
 
 				{#if onExport}
 					<button class="action-btn" onclick={() => handleAction(onExport)} title="Export">
-						<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-							<path
-								d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5-5 5 5M12 5v12"
-								stroke-width="2"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-							/>
-						</svg>
+						<span class="btn-icon">{@html exportIcon}</span>
 						<span>Export</span>
 					</button>
 				{/if}
 
 				{#if onDelete}
 					<button class="action-btn danger" onclick={() => handleAction(onDelete)} title="Delete">
-						<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-							<polyline
-								points="3 6 5 6 21 6"
-								stroke-width="2"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-							/>
-							<path
-								d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
-								stroke-width="2"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-							/>
-						</svg>
+						<span class="btn-icon">{@html trashIcon}</span>
 						<span>Delete</span>
 					</button>
 				{/if}
@@ -113,10 +72,7 @@
 				<div class="divider"></div>
 
 				<button class="action-btn" onclick={onClear} title="Clear selection">
-					<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-						<line x1="18" y1="6" x2="6" y2="18" stroke-width="2" stroke-linecap="round" />
-						<line x1="6" y1="6" x2="18" y2="18" stroke-width="2" stroke-linecap="round" />
-					</svg>
+					<span class="btn-icon">{@html closeIcon}</span>
 					<span>Clear</span>
 				</button>
 			</div>
@@ -152,10 +108,13 @@
 		align-items: center;
 		gap: var(--space-3);
 		color: var(--text-primary);
+		--color-ink: var(--primary-600);
 	}
 
-	.selection-info svg {
-		color: var(--primary-600);
+	.selection-icon {
+		display: inline-flex;
+		width: 20px;
+		height: 20px;
 		flex-shrink: 0;
 	}
 
@@ -200,6 +159,13 @@
 		background-color: var(--error-50);
 	}
 
+	.btn-icon {
+		display: inline-flex;
+		width: 18px;
+		height: 18px;
+		flex-shrink: 0;
+	}
+
 	.divider {
 		width: 1px;
 		height: 24px;
@@ -228,7 +194,7 @@
 			justify-content: center;
 		}
 
-		.action-btn span {
+		.action-btn span:not(.btn-icon) {
 			display: none;
 		}
 

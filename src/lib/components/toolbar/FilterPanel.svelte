@@ -1,4 +1,6 @@
 <script lang="ts">
+	import closeIcon from '$lib/components/icons/CloseIcon.svg?raw';
+
 	export interface FilterState {
 		dateRange: string;
 		minTracks?: number;
@@ -72,10 +74,7 @@
 		<div class="panel-header">
 			<h3>Filters</h3>
 			<button class="close-button" onclick={handleClose}>
-				<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-					<line x1="18" y1="6" x2="6" y2="18" stroke-width="2" stroke-linecap="round" />
-					<line x1="6" y1="6" x2="18" y2="18" stroke-width="2" stroke-linecap="round" />
-				</svg>
+				<span class="btn-icon">{@html closeIcon}</span>
 			</button>
 		</div>
 
@@ -221,6 +220,12 @@
 	.close-button:hover {
 		color: var(--text-primary);
 		background-color: var(--bg-hover);
+	}
+
+	.btn-icon {
+		display: inline-flex;
+		width: 20px;
+		height: 20px;
 	}
 
 	.panel-content {

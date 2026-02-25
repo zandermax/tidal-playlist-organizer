@@ -1,5 +1,8 @@
 <script lang="ts">
 	import { authStore } from '$lib/stores/auth';
+	import musicNoteIcon from '$lib/components/icons/MusicNoteIcon.svg?raw';
+	import searchIcon from '$lib/components/icons/SearchIcon.svg?raw';
+	import logoutIcon from '$lib/components/icons/LogoutIcon.svg?raw';
 
 	const auth = $derived($authStore);
 
@@ -18,29 +21,14 @@
 	<div class="topbar-content">
 		<div class="topbar-left">
 			<div class="logo">
-				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-					<path
-						d="M9 18V5l12-2v13M9 13c0 1.66-1.34 3-3 3s-3-1.34-3-3 1.34-3 3-3 3 1.34 3 3z"
-						stroke-width="2"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-					/>
-				</svg>
+				<span class="logo-icon">{@html musicNoteIcon}</span>
 				<span class="logo-text">Tidal Library</span>
 			</div>
 		</div>
 
 		<div class="topbar-center">
 			<div class="search-container">
-				<svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none">
-					<circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2" />
-					<path
-						d="m21 21-4.35-4.35"
-						stroke="currentColor"
-						stroke-width="2"
-						stroke-linecap="round"
-					/>
-				</svg>
+				<span class="search-icon">{@html searchIcon}</span>
 				<input
 					type="search"
 					placeholder="Search playlists..."
@@ -54,14 +42,7 @@
 			{#if auth.isAuthenticated}
 				<div class="user-menu">
 					<button class="user-button" onclick={handleLogout}>
-						<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-							<path
-								d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"
-								stroke-width="2"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-							/>
-						</svg>
+						<span class="btn-icon">{@html logoutIcon}</span>
 						Logout
 					</button>
 				</div>
@@ -102,10 +83,13 @@
 		color: var(--text-primary);
 		font-weight: var(--font-weight-semibold);
 		font-size: var(--font-size-base);
+		--color-ink: var(--primary-500);
 	}
 
-	.logo svg {
-		color: var(--primary-500);
+	.logo-icon {
+		display: inline-flex;
+		width: 24px;
+		height: 24px;
 	}
 
 	.logo-text {
@@ -123,6 +107,9 @@
 	}
 
 	.search-icon {
+		display: inline-flex;
+		width: 16px;
+		height: 16px;
 		position: absolute;
 		left: var(--space-3);
 		top: 50%;
@@ -184,6 +171,12 @@
 	.user-button:hover {
 		color: var(--text-primary);
 		background-color: var(--bg-hover);
+	}
+
+	.btn-icon {
+		display: inline-flex;
+		width: 16px;
+		height: 16px;
 	}
 
 	@media (max-width: 768px) {

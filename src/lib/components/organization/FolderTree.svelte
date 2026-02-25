@@ -1,5 +1,10 @@
 <script lang="ts">
 	import { organization, type Folder } from '$lib/stores/organization';
+	import plusIcon from '$lib/components/icons/PlusIcon.svg?raw';
+	import chevronDownIcon from '$lib/components/icons/ChevronDownIcon.svg?raw';
+	import chevronRightIcon from '$lib/components/icons/ChevronRightIcon.svg?raw';
+	import folderIcon from '$lib/components/icons/FolderIcon.svg?raw';
+	import trashIcon from '$lib/components/icons/TrashIcon.svg?raw';
 
 	interface Props {
 		folders?: Folder[];
@@ -48,10 +53,7 @@
 	<div class="tree-header">
 		<span class="tree-title">Folders</span>
 		<button class="add-button" onclick={handleAddFolder} title="Add folder">
-			<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-				<line x1="12" y1="5" x2="12" y2="19" stroke-width="2" stroke-linecap="round" />
-				<line x1="5" y1="12" x2="19" y2="12" stroke-width="2" stroke-linecap="round" />
-			</svg>
+			<span class="btn-icon-sm">{@html plusIcon}</span>
 		</button>
 	</div>
 
@@ -71,41 +73,13 @@
 						}}
 					>
 						{#if folder.expanded}
-							<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-								<polyline
-									points="6 9 12 15 18 9"
-									stroke-width="2"
-									stroke-linecap="round"
-									stroke-linejoin="round"
-								/>
-							</svg>
+							<span class="btn-icon-sm">{@html chevronDownIcon}</span>
 						{:else}
-							<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-								<polyline
-									points="9 18 15 12 9 6"
-									stroke-width="2"
-									stroke-linecap="round"
-									stroke-linejoin="round"
-								/>
-							</svg>
+							<span class="btn-icon-sm">{@html chevronRightIcon}</span>
 						{/if}
 					</button>
 
-					<svg
-						class="folder-icon"
-						width="18"
-						height="18"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-					>
-						<path
-							d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"
-							stroke-width="2"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-						/>
-					</svg>
+					<span class="folder-icon">{@html folderIcon}</span>
 
 					<span class="folder-name">{folder.name}</span>
 					<span class="folder-count">{folder.playlistIds.length}</span>
@@ -115,20 +89,7 @@
 						onclick={(e) => handleDeleteFolder(folder.id, e)}
 						title="Delete folder"
 					>
-						<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-							<polyline
-								points="3 6 5 6 21 6"
-								stroke-width="2"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-							/>
-							<path
-								d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
-								stroke-width="2"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-							/>
-						</svg>
+						<span class="btn-icon-sm">{@html trashIcon}</span>
 					</button>
 				</div>
 
@@ -139,21 +100,7 @@
 							class:active={selectedFolderId === childFolder.id}
 							onclick={() => handleSelect(childFolder.id)}
 						>
-							<svg
-								class="folder-icon"
-								width="18"
-								height="18"
-								viewBox="0 0 24 24"
-								fill="none"
-								stroke="currentColor"
-							>
-								<path
-									d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"
-									stroke-width="2"
-									stroke-linecap="round"
-									stroke-linejoin="round"
-								/>
-							</svg>
+							<span class="folder-icon">{@html folderIcon}</span>
 							<span class="folder-name">{childFolder.name}</span>
 							<span class="folder-count">{childFolder.playlistIds.length}</span>
 						</button>
@@ -250,6 +197,9 @@
 	}
 
 	.folder-icon {
+		display: inline-flex;
+		width: 18px;
+		height: 18px;
 		flex-shrink: 0;
 	}
 
@@ -283,5 +233,12 @@
 	.delete-button:hover {
 		color: var(--error-600);
 		background-color: var(--error-50);
+	}
+
+	.btn-icon-sm {
+		display: inline-flex;
+		width: 14px;
+		height: 14px;
+		flex-shrink: 0;
 	}
 </style>
