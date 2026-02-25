@@ -23,7 +23,9 @@
 
 	const attrs = $derived(playlist.attributes);
 	const trackCount = $derived(attrs.numberOfItems || 0);
-	const lastModified = $derived(attrs.lastModifiedAt ? formatDate(attrs.lastModifiedAt) : 'Unknown');
+	const lastModified = $derived(
+		attrs.lastModifiedAt ? formatDate(attrs.lastModifiedAt) : 'Unknown'
+	);
 	const tidalUrl = $derived(attrs.externalLinks?.[0]?.href || attrs.url || '#');
 
 	function handleCheckboxChange(event: Event) {

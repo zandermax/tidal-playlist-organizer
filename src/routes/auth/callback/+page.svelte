@@ -14,7 +14,8 @@
 
 			// Check for OAuth error
 			if (urlParams.has('error')) {
-				const errorMsg = urlParams.get('error_description') || urlParams.get('error') || 'Authentication failed';
+				const errorMsg =
+					urlParams.get('error_description') || urlParams.get('error') || 'Authentication failed';
 				error = errorMsg;
 				isProcessing = false;
 				return;
@@ -87,7 +88,9 @@
 		font-size: 1.1em;
 		border-radius: 8px;
 		cursor: pointer;
-		transition: transform 0.2s, box-shadow 0.2s;
+		transition:
+			transform 0.2s,
+			box-shadow 0.2s;
 		font-weight: 600;
 		text-decoration: none;
 	}

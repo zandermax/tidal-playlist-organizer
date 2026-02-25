@@ -34,7 +34,12 @@
 			<div class="search-container">
 				<svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none">
 					<circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2" />
-					<path d="m21 21-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+					<path
+						d="m21 21-4.35-4.35"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+					/>
 				</svg>
 				<input
 					type="search"

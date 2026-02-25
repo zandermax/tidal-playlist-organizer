@@ -36,10 +36,28 @@
 			interface.
 		</p>
 
-		<button onclick={handleLogin} disabled={isLoggingIn} class="btn btn-primary btn-lg login-button">
+		<button
+			onclick={handleLogin}
+			disabled={isLoggingIn}
+			class="btn btn-primary btn-lg login-button"
+		>
 			{#if isLoggingIn}
-				<svg class="spinner" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-					<circle cx="12" cy="12" r="10" stroke-width="3" stroke-dasharray="32" stroke-dashoffset="8"/>
+				<svg
+					class="spinner"
+					width="20"
+					height="20"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+				>
+					<circle
+						cx="12"
+						cy="12"
+						r="10"
+						stroke-width="3"
+						stroke-dasharray="32"
+						stroke-dashoffset="8"
+					/>
 				</svg>
 				Connecting...
 			{:else}

@@ -58,24 +58,47 @@
 	<div class="tree-content">
 		{#each rootFolders as folder (folder.id)}
 			<div class="folder-item">
-				<button
+				<div
 					class="folder-button"
 					class:active={selectedFolderId === folder.id}
 					onclick={() => handleSelect(folder.id)}
 				>
-					<button class="folder-toggle" onclick={(e) => { e.stopPropagation(); handleToggle(folder.id); }}>
+					<button
+						class="folder-toggle"
+						onclick={(e) => {
+							e.stopPropagation();
+							handleToggle(folder.id);
+						}}
+					>
 						{#if folder.expanded}
 							<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-								<polyline points="6 9 12 15 18 9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+								<polyline
+									points="6 9 12 15 18 9"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								/>
 							</svg>
 						{:else}
 							<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-								<polyline points="9 18 15 12 9 6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+								<polyline
+									points="9 18 15 12 9 6"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								/>
 							</svg>
 						{/if}
 					</button>
 
-					<svg class="folder-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+					<svg
+						class="folder-icon"
+						width="18"
+						height="18"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+					>
 						<path
 							d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"
 							stroke-width="2"
@@ -93,7 +116,12 @@
 						title="Delete folder"
 					>
 						<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-							<polyline points="3 6 5 6 21 6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+							<polyline
+								points="3 6 5 6 21 6"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+							/>
 							<path
 								d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
 								stroke-width="2"
@@ -102,7 +130,7 @@
 							/>
 						</svg>
 					</button>
-				</button>
+				</div>
 
 				{#if folder.expanded}
 					{#each getChildFolders(folder.id) as childFolder (childFolder.id)}
@@ -111,7 +139,14 @@
 							class:active={selectedFolderId === childFolder.id}
 							onclick={() => handleSelect(childFolder.id)}
 						>
-							<svg class="folder-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+							<svg
+								class="folder-icon"
+								width="18"
+								height="18"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+							>
 								<path
 									d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"
 									stroke-width="2"
@@ -189,6 +224,7 @@
 		transition: all var(--transition-fast);
 		text-align: left;
 		position: relative;
+		cursor: pointer;
 	}
 
 	.folder-button:hover {

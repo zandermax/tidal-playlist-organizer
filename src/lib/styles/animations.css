@@ -205,7 +205,9 @@
 	}
 
 	.transition-colors {
-		transition: background-color var(--transition-fast), color var(--transition-fast),
+		transition:
+			background-color var(--transition-fast),
+			color var(--transition-fast),
 			border-color var(--transition-fast);
 	}
 
@@ -222,7 +224,9 @@
 	   =========================== */
 
 	.hover-lift {
-		transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+		transition:
+			transform var(--transition-fast),
+			box-shadow var(--transition-fast);
 	}
 
 	.hover-lift:hover {

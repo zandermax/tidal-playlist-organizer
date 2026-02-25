@@ -7,6 +7,7 @@ The application has been successfully migrated from a vanilla JavaScript single-
 ## Architecture Overview
 
 ### Technology Stack
+
 - **Framework**: SvelteKit 2.49.1
 - **Language**: TypeScript 5.9.3
 - **UI Library**: Svelte 5.45.6 with runes
@@ -39,6 +40,7 @@ src/lib/
 ## Files Created/Updated
 
 ### Type Definitions
+
 - **`src/lib/types/tidal.ts`** - TypeScript interfaces for:
   - TidalConfig
   - Playlist and PlaylistAttributes
@@ -48,12 +50,14 @@ src/lib/
   - TidalCredentials
 
 ### Utility Functions
+
 - **`src/lib/utils/tidal-utils.ts`** - Helper functions:
   - `decodeJWT()` - Extract user ID from JWT token
   - `formatDate()` - Format dates for display
   - `getCoverArtUrl()` - Extract cover art URL from API response
 
 ### State Management
+
 - **`src/lib/stores/config.ts`** - Configuration store:
   - Reads from environment variables
   - Provides reactive access to clientId, redirectUri, countryCode
@@ -67,11 +71,13 @@ src/lib/
 ### UI Components
 
 #### Basic Components
+
 - **`src/lib/components/Header.svelte`** - App header with title and subtitle
 - **`src/lib/components/ErrorMessage.svelte`** - Conditional error display
 - **`src/lib/components/LoadingSpinner.svelte`** - Loading animation
 
 #### Feature Components
+
 - **`src/lib/components/LoginView.svelte`** - Login screen with:
   - Welcome message
   - Login button with loading state
@@ -94,6 +100,7 @@ src/lib/
   - API integration for fetching playlists
 
 ### Routes
+
 - **`src/routes/+page.svelte`** - Main page:
   - Checks authentication on mount
   - Conditionally renders LoginView or PlaylistsView
@@ -112,6 +119,7 @@ src/lib/
   - Favicon
 
 ### Configuration
+
 - **`package.json`** - Updated with:
   - Added `@tidal-music/auth: ^1.4.0`
   - Added `@tidal-music/api: ^0.7.0`
@@ -121,6 +129,7 @@ src/lib/
 - **`env.template`** - Environment variables template (unchanged)
 
 ### Documentation
+
 - **`README.md`** - Comprehensive documentation:
   - Project overview and features
   - Prerequisites and setup instructions
@@ -140,12 +149,14 @@ src/lib/
 ## Key Features Implemented
 
 ### 1. Type-Safe Development ✅
+
 - Full TypeScript coverage
 - Type definitions for Tidal API
 - Type-safe Svelte stores
 - Props interfaces for all components
 
 ### 2. Modern Authentication Flow ✅
+
 - OAuth 2.0 with PKCE
 - Dedicated callback route
 - Reactive auth state via Svelte stores
@@ -153,24 +164,28 @@ src/lib/
 - Automatic token refresh via SDK
 
 ### 3. Component-Based Architecture ✅
+
 - Granular, reusable components
 - Clear separation of concerns
 - Props-based data flow
 - Scoped styling per component
 
 ### 4. State Management ✅
+
 - Svelte stores for reactive state
 - Auth store with async actions
 - Config store from environment
 - localStorage sync for persistence
 
 ### 5. Responsive UI ✅
+
 - Mobile-first design
 - Grid layout with auto-fill
 - Responsive breakpoints
 - Touch-friendly interactions
 
 ### 6. Error Handling ✅
+
 - Error states in auth store
 - ErrorMessage component for display
 - OAuth error handling in callback
@@ -179,17 +194,20 @@ src/lib/
 ## How to Use
 
 1. **Install dependencies:**
+
    ```bash
    npm install
    ```
 
 2. **Configure environment:**
+
    ```bash
    cp env.template .env
    # Edit .env with your Tidal Client ID and country code
    ```
 
 3. **Run the app:**
+
    ```bash
    npm run dev
    ```
@@ -203,6 +221,7 @@ src/lib/
 ## Architecture Highlights
 
 ### Authentication Flow
+
 ```
 User clicks login → AuthStore.login() → Redirect to Tidal →
 User authenticates → Redirect to /auth/callback →
@@ -211,6 +230,7 @@ Redirect to home → PlaylistsView renders
 ```
 
 ### State Management Pattern
+
 ```
 Component → Reads from $authStore → Reactive updates →
 Component calls authStore.action() → Store updates state →
@@ -218,6 +238,7 @@ All subscribers react → UI updates automatically
 ```
 
 ### Component Communication
+
 ```
 +page.svelte (orchestrator)
   ↓ reads auth state from store
@@ -304,6 +325,7 @@ The core migration is complete. Future enhancements could include:
 ## Migration Benefits
 
 ### Before (Vanilla JS)
+
 - 615-line monolithic HTML file
 - Manual DOM manipulation
 - No type safety
@@ -311,6 +333,7 @@ The core migration is complete. Future enhancements could include:
 - Client-side routing in one file
 
 ### After (SvelteKit + TypeScript)
+
 - Modular component architecture
 - Reactive state management
 - Full type safety

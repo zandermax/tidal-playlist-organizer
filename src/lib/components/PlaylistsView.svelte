@@ -33,9 +33,7 @@
 
 	// Create a map of cover URLs for easy lookup
 	const coverUrls = $derived(
-		new Map(
-			playlists.map((playlist) => [playlist.id, getCoverArtUrl(playlist, included)])
-		)
+		new Map(playlists.map((playlist) => [playlist.id, getCoverArtUrl(playlist, included)]))
 	);
 
 	async function loadPlaylists() {
@@ -64,7 +62,8 @@
 
 			if (apiError) {
 				console.error('API Error:', apiError);
-				const errorMsg = apiError.errors?.map((e) => e.detail).join(', ') || 'Failed to load playlists';
+				const errorMsg =
+					apiError.errors?.map((e) => e.detail).join(', ') || 'Failed to load playlists';
 				error = errorMsg;
 				isLoading = false;
 				return;
@@ -238,7 +237,7 @@
 		<ErrorMessage message={error} />
 	{:else}
 		{#if !isLoading && playlists.length > 0}
-			<StatsCards playlists={playlists} />
+			<StatsCards {playlists} />
 		{/if}
 
 		<Toolbar onSearch={handleSearch} onFilter={handleFilter} selectedCount={selectedIds.size} />

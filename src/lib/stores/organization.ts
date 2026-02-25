@@ -24,15 +24,60 @@ interface OrganizationState {
 
 // Default colors for tags
 export const TAG_COLORS = [
-	{ name: 'red', bg: 'var(--tag-red-bg)', text: 'var(--tag-red-text)', border: 'var(--tag-red-border)' },
-	{ name: 'orange', bg: 'var(--tag-orange-bg)', text: 'var(--tag-orange-text)', border: 'var(--tag-orange-border)' },
-	{ name: 'yellow', bg: 'var(--tag-yellow-bg)', text: 'var(--tag-yellow-text)', border: 'var(--tag-yellow-border)' },
-	{ name: 'green', bg: 'var(--tag-green-bg)', text: 'var(--tag-green-text)', border: 'var(--tag-green-border)' },
-	{ name: 'blue', bg: 'var(--tag-blue-bg)', text: 'var(--tag-blue-text)', border: 'var(--tag-blue-border)' },
-	{ name: 'indigo', bg: 'var(--tag-indigo-bg)', text: 'var(--tag-indigo-text)', border: 'var(--tag-indigo-border)' },
-	{ name: 'purple', bg: 'var(--tag-purple-bg)', text: 'var(--tag-purple-text)', border: 'var(--tag-purple-border)' },
-	{ name: 'pink', bg: 'var(--tag-pink-bg)', text: 'var(--tag-pink-text)', border: 'var(--tag-pink-border)' },
-	{ name: 'gray', bg: 'var(--tag-gray-bg)', text: 'var(--tag-gray-text)', border: 'var(--tag-gray-border)' }
+	{
+		name: 'red',
+		bg: 'var(--tag-red-bg)',
+		text: 'var(--tag-red-text)',
+		border: 'var(--tag-red-border)'
+	},
+	{
+		name: 'orange',
+		bg: 'var(--tag-orange-bg)',
+		text: 'var(--tag-orange-text)',
+		border: 'var(--tag-orange-border)'
+	},
+	{
+		name: 'yellow',
+		bg: 'var(--tag-yellow-bg)',
+		text: 'var(--tag-yellow-text)',
+		border: 'var(--tag-yellow-border)'
+	},
+	{
+		name: 'green',
+		bg: 'var(--tag-green-bg)',
+		text: 'var(--tag-green-text)',
+		border: 'var(--tag-green-border)'
+	},
+	{
+		name: 'blue',
+		bg: 'var(--tag-blue-bg)',
+		text: 'var(--tag-blue-text)',
+		border: 'var(--tag-blue-border)'
+	},
+	{
+		name: 'indigo',
+		bg: 'var(--tag-indigo-bg)',
+		text: 'var(--tag-indigo-text)',
+		border: 'var(--tag-indigo-border)'
+	},
+	{
+		name: 'purple',
+		bg: 'var(--tag-purple-bg)',
+		text: 'var(--tag-purple-text)',
+		border: 'var(--tag-purple-border)'
+	},
+	{
+		name: 'pink',
+		bg: 'var(--tag-pink-bg)',
+		text: 'var(--tag-pink-text)',
+		border: 'var(--tag-pink-border)'
+	},
+	{
+		name: 'gray',
+		bg: 'var(--tag-gray-bg)',
+		text: 'var(--tag-gray-text)',
+		border: 'var(--tag-gray-border)'
+	}
 ];
 
 // Initial state

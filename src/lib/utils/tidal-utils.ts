@@ -43,9 +43,7 @@ export function getCoverArtUrl(playlist: Playlist, included?: CoverArt[]): strin
 	}
 
 	const coverArtId = playlist.relationships.coverArt.data[0].id;
-	const coverArt = included?.find(
-		(item) => item.type === 'artworks' && item.id === coverArtId
-	);
+	const coverArt = included?.find((item) => item.type === 'artworks' && item.id === coverArtId);
 
 	if (coverArt?.attributes?.files) {
 		// Find a suitable size (prefer 320x320 or similar)

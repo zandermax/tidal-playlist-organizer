@@ -57,14 +57,28 @@
 				<option value="name">Name</option>
 				<option value="tracks">Track Count</option>
 			</select>
-			<button class="sort-direction-button" onclick={toggleSortDirection} title="Toggle sort direction">
+			<button
+				class="sort-direction-button"
+				onclick={toggleSortDirection}
+				title="Toggle sort direction"
+			>
 				{#if prefs.sortDirection === 'asc'}
 					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-						<path d="M12 5v14M19 12l-7 7-7-7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+						<path
+							d="M12 5v14M19 12l-7 7-7-7"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+						/>
 					</svg>
 				{:else}
 					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-						<path d="M12 19V5M5 12l7-7 7 7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+						<path
+							d="M12 19V5M5 12l7-7 7 7"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+						/>
 					</svg>
 				{/if}
 			</button>
@@ -72,7 +86,12 @@
 
 		<button class="filter-button btn-ghost" onclick={openFilters}>
 			<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-				<polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+				<polygon
+					points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+				/>
 			</svg>
 			Filters
 		</button>

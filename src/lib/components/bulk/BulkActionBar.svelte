@@ -24,7 +24,12 @@
 		<div class="bar-content">
 			<div class="selection-info">
 				<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-					<polyline points="9 11 12 14 22 4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+					<polyline
+						points="9 11 12 14 22 4"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					/>
 					<path
 						d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"
 						stroke-width="2"
@@ -32,12 +37,18 @@
 						stroke-linejoin="round"
 					/>
 				</svg>
-				<span class="count">{selectedCount} {selectedCount === 1 ? 'playlist' : 'playlists'} selected</span>
+				<span class="count"
+					>{selectedCount} {selectedCount === 1 ? 'playlist' : 'playlists'} selected</span
+				>
 			</div>
 
 			<div class="actions">
 				{#if onAddToFolder}
-					<button class="action-btn" onclick={() => handleAction(onAddToFolder)} title="Add to folder">
+					<button
+						class="action-btn"
+						onclick={() => handleAction(onAddToFolder)}
+						title="Add to folder"
+					>
 						<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
 							<path
 								d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"
@@ -82,7 +93,12 @@
 				{#if onDelete}
 					<button class="action-btn danger" onclick={() => handleAction(onDelete)} title="Delete">
 						<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-							<polyline points="3 6 5 6 21 6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+							<polyline
+								points="3 6 5 6 21 6"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+							/>
 							<path
 								d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
 								stroke-width="2"

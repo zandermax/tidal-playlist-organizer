@@ -62,10 +62,7 @@
 {:else}
 	<div class="playlist-grid" data-view={viewMode}>
 		{#each playlists as playlist, i (playlist.id)}
-			<div
-				class="grid-item animate-fade-in-up"
-				style="animation-delay: {Math.min(i * 30, 300)}ms"
-			>
+			<div class="grid-item animate-fade-in-up" style="animation-delay: {Math.min(i * 30, 300)}ms">
 				<PlaylistCard
 					{playlist}
 					coverUrl={getCoverUrl(playlist)}

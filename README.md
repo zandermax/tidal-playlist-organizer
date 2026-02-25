@@ -124,14 +124,17 @@ src/
 ## Troubleshooting
 
 **"Client ID not configured"**
+
 - Ensure `.env` file exists with `VITE_TIDAL_CLIENT_ID` set
 - Restart the development server after editing `.env`
 
 **"Invalid redirect URI"**
+
 - Verify redirect URIs in Tidal Developer Portal match exactly
 - Both base URL and callback URL should be registered
 
 **TypeScript errors**
+
 - Run `npm run check` to see detailed errors
 - Ensure all dependencies are installed with `npm install`
 

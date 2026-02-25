@@ -54,12 +54,14 @@ sequenceDiagram
 ### 2. State Management Layer
 
 #### Auth Store (`src/lib/stores/auth.ts`)
+
 - Manages authentication state (isAuthenticated, userId, isLoading, error)
 - Provides actions: `checkAuth()`, `login()`, `finalizeAuth()`, `logout()`
 - Syncs with localStorage for session persistence
 - Wraps Tidal Auth SDK for reactive state updates
 
 #### Config Store (`src/lib/stores/config.ts`)
+
 - Provides read-only access to environment variables
 - Centralizes configuration management
 - Type-safe configuration access
@@ -100,16 +102,19 @@ sequenceDiagram
 ### Component Responsibilities
 
 #### Core Routes
+
 - **`+layout.svelte`**: Root layout with global styles (gradient background, CSS reset)
 - **`+page.svelte`**: Main page that checks auth and renders appropriate view
 - **`auth/callback/+page.svelte`**: OAuth callback handler, processes auth code
 
 #### Presentational Components
+
 - **`Header.svelte`**: Displays title and subtitle with gradient styling
 - **`ErrorMessage.svelte`**: Conditionally displays error messages
 - **`LoadingSpinner.svelte`**: Shows loading animation with message
 
 #### Feature Components
+
 - **`LoginView.svelte`**: Login card with OAuth initiation
 - **`PlaylistsView.svelte`**: Fetches and displays playlists, handles logout
 - **`PlaylistCard.svelte`**: Individual playlist display with cover art
@@ -177,16 +182,16 @@ sequenceDiagram
 
 ## Technology Stack
 
-| Component          | Technology              | Version  | Purpose                    |
-| ------------------ | ----------------------- | -------- | -------------------------- |
-| Framework          | SvelteKit               | ^2.49.1  | Web framework & routing    |
-| UI Library         | Svelte                  | ^5.45.6  | Reactive components        |
-| Language           | TypeScript              | ^5.9.3   | Type safety                |
-| Auth SDK           | @tidal-music/auth       | ^1.4.0   | Authentication             |
-| API Client         | @tidal-music/api        | ^0.7.0   | API requests               |
-| Build Tool         | Vite                    | ^7.2.6   | Dev server & bundling      |
-| Package Manager    | npm                     | -        | Dependencies               |
-| Adapter            | @sveltejs/adapter-auto  | ^7.0.0   | SvelteKit deployment       |
+| Component       | Technology             | Version | Purpose                 |
+| --------------- | ---------------------- | ------- | ----------------------- |
+| Framework       | SvelteKit              | ^2.49.1 | Web framework & routing |
+| UI Library      | Svelte                 | ^5.45.6 | Reactive components     |
+| Language        | TypeScript             | ^5.9.3  | Type safety             |
+| Auth SDK        | @tidal-music/auth      | ^1.4.0  | Authentication          |
+| API Client      | @tidal-music/api       | ^0.7.0  | API requests            |
+| Build Tool      | Vite                   | ^7.2.6  | Dev server & bundling   |
+| Package Manager | npm                    | -       | Dependencies            |
+| Adapter         | @sveltejs/adapter-auto | ^7.0.0  | SvelteKit deployment    |
 
 ## Configuration
 
