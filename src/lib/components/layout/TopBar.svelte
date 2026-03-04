@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { authStore } from '$lib/stores/auth';
-	import { searchStore } from '$lib/stores/search';
+	import { authStore } from '$lib/stores/auth.store';
+	import { searchStore } from '$lib/stores/search.store';
 	import Icon from '$lib/components/icons/Icon.svelte';
 
 	const auth = $derived($authStore);

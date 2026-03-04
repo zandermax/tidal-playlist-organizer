@@ -1,8 +1,8 @@
 <script lang="ts">
 	import TopBar from './TopBar.svelte';
 	import Sidebar from './Sidebar.svelte';
-	import { viewPreferences } from '$lib/stores/viewPreferences';
-	import { authStore } from '$lib/stores/auth';
+	import { viewPreferences } from '$lib/stores/viewPreferences.store';
+	import { authStore } from '$lib/stores/auth.store';
 
 	interface Props {
 		children?: any;

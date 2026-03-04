@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { organization, type Folder } from '$lib/stores/organization';
+	import { organization, type Folder } from '$lib/stores/organization.store';
 	import Icon from '$lib/components/icons/Icon.svelte';
 
 	interface Props {

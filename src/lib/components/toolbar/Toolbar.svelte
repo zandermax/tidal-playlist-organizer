@@ -3,8 +3,8 @@
 	import SearchBar from './SearchBar.svelte';
 	import FilterPanel, { type FilterState } from './FilterPanel.svelte';
 
-	import { viewPreferences, type SortOption } from '$lib/stores/viewPreferences';
-	import { searchStore } from '$lib/stores/search';
+	import { viewPreferences, type SortOption } from '$lib/stores/viewPreferences.store';
+	import { searchStore } from '$lib/stores/search.store';
 
 	import Icon from '$lib/components/icons/Icon.svelte';
 

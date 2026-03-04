@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { authStore } from '$lib/stores/auth';
+	import { authStore } from '$lib/stores/auth.store';
 	import ErrorMessage from './ErrorMessage.svelte';
 	import SpinnerIcon from '$lib/components/icons/SpinnerIcon.svelte';
 	import Icon from '$lib/components/icons/Icon.svelte';

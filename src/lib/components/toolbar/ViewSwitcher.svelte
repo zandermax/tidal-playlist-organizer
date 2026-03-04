@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { viewPreferences, type ViewMode } from '$lib/stores/viewPreferences';
+	import { viewPreferences, type ViewMode } from '$lib/stores/viewPreferences.store';
 	import Icon from '$lib/components/icons/Icon.svelte';
 
 	const prefs = $derived($viewPreferences);

@@ -1,14 +1,16 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
-	import { authStore } from '$lib/stores/auth';
-	import { config } from '$lib/stores/config';
-	import { viewPreferences } from '$lib/stores/viewPreferences';
-	import { searchStore } from '$lib/stores/search';
+	import { authStore } from '$lib/stores/auth.store';
+	import { config } from '$lib/stores/config.store';
+	import { viewPreferences } from '$lib/stores/viewPreferences.store';
+	import { searchStore } from '$lib/stores/search.store';
+	import { organization } from '$lib/stores/organization.store';
 
 	import { createAPIClient } from '@tidal-music/api';
 	import { credentialsProvider } from '@tidal-music/auth';
-	import { getCoverArtUrl } from '$lib/utils/tidal-utils';
+	import { getCoverArtUrl } from '$lib/utils/tidal.utils';
+	import { parsePlaylistName } from '$lib/utils/parsers.utils';
 
 	import ErrorMessage from './ErrorMessage.svelte';
 	import Toolbar from './toolbar/Toolbar.svelte';
@@ -82,6 +84,9 @@
 
 			playlists = data.data as Playlist[];
 			included = (data.included as CoverArt[]) || [];
+
+			organization.populateTagsFromPlaylists(playlists);
+
 			isLoading = false;
 		} catch (err) {
 			console.error('Error loading playlists:', err);
@@ -91,12 +96,19 @@
 	}
 
 	function filterAndSortPlaylists() {
-		let result = [...playlists];
+		const parsedPlaylists = playlists.map(
+			(p) =>
+				({ ...p, ...parsePlaylistName(p.attributes.name) }) as Playlist & {
+					displayName: string;
+					tags: string[];
+				}
+		);
+		let result = [...parsedPlaylists];
 
-		// Apply search filter
+		// Apply search filter (match against display name, not raw name with tag tokens)
 		if (search.trim()) {
 			const query = search.toLowerCase();
-			result = result.filter((p) => p.attributes.name.toLowerCase().includes(query));
+			result = result.filter((p) => p.displayName.toLowerCase().includes(query));
 		}
 
 		// Apply date range filter

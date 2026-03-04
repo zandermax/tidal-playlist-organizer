@@ -7,8 +7,8 @@ import {
 	credentialsProvider,
 	logout as tidalLogout
 } from '@tidal-music/auth';
-import { config } from './config';
-import { decodeJWT } from '$lib/utils/tidal-utils';
+import { config } from './config.store';
+import { decodeJWT } from '$lib/utils/tidal.utils';
 import type { TidalCredentials } from '$lib/types/tidal';
 
 interface AuthState {

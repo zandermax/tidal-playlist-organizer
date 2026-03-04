@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { viewPreferences } from '$lib/stores/viewPreferences';
+	import { viewPreferences } from '$lib/stores/viewPreferences.store';
 	import FolderTree from '../organization/FolderTree.svelte';
 	import Icon from '$lib/components/icons/Icon.svelte';
 

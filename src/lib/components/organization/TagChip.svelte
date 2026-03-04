@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { TAG_COLORS } from '$lib/stores/organization';
+	import { TAG_COLORS } from '$lib/stores/organization.store';
 	import Icon from '$lib/components/icons/Icon.svelte';
 
 	interface Props {

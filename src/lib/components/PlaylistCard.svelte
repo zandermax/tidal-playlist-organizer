@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Playlist } from '$lib/types/tidal';
-	import { formatDate } from '$lib/utils/tidal-utils';
-	import type { ViewMode } from '$lib/stores/viewPreferences';
+	import { formatDate } from '$lib/utils/tidal.utils';
+	import type { ViewMode } from '$lib/stores/viewPreferences.store';
 	import Icon from '$lib/components/icons/Icon.svelte';
 
 	interface Props {

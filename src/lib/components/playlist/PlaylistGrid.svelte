@@ -1,7 +1,7 @@
 <script lang="ts">
 	import PlaylistCard from '../PlaylistCard.svelte';
 	import type { Playlist } from '$lib/types/tidal';
-	import type { ViewMode } from '$lib/stores/viewPreferences';
+	import type { ViewMode } from '$lib/stores/viewPreferences.store';
 	import Icon from '$lib/components/icons/Icon.svelte';
 
 	interface Props {

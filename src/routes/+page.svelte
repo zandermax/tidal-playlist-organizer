@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { authStore } from '$lib/stores/auth';
+	import { authStore } from '$lib/stores/auth.store';
 	import AppShell from '$lib/components/layout/AppShell.svelte';
 	import LoginView from '$lib/components/LoginView.svelte';
 	import PlaylistsView from '$lib/components/PlaylistsView.svelte';
