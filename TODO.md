@@ -66,10 +66,10 @@ The stores in this project use the older Svelte 4 `writable()` pattern. To read 
 Tokens are appended to the **end** of the playlist name:
 
 ```
-My Playlist [workout][chill]
+My Playlist [[workout]][[chill]]
 ```
 
-- Tag token: `[tagname]` (lowercase, no spaces — use hyphens if needed)
+- Tag token: `[[tagname]]` (lowercase, no spaces — use hyphens if needed)
 - Multiple tokens are fine; order doesn't matter
 - Tokens go at the end so Tidal's own UI (which truncates long names) still shows the human-readable playlist name first
 - The display name shown in this app strips all tokens: `My Playlist`

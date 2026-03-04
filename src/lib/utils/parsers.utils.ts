@@ -1,7 +1,7 @@
 /**
- * Tags are formatted as [tagname]
+ * Tags are formatted as [[tagname]]
  */
-const TAG_REGEX = /\[.*?\]/g;
+const TAG_REGEX = /\[\[.*?\]\]/g;
 
 /**
  * Parses a playlist name into a display name and metadata (tags)
@@ -19,7 +19,7 @@ export function parsePlaylistName(raw: string): {
 
 	const tagMatches = raw.match(TAG_REGEX);
 	if (tagMatches) {
-		tags = tagMatches.map((match) => match.replace('[', '').replace(']', '').trim());
+		tags = tagMatches.map((match) => match.slice(2, -2).trim());
 	}
 
 	return { displayName, tags };

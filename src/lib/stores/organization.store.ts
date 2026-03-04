@@ -124,7 +124,7 @@ function createOrganizationStore() {
 					);
 				});
 			} else {
-				console.log('  No tagged playlists found. Try renaming one to end with e.g. [chill]');
+				console.log('  No tagged playlists found. Try renaming one to end with e.g. [[chill]]');
 			}
 			console.groupEnd();
 
