@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { authStore } from '$lib/stores/auth';
+	import { searchStore } from '$lib/stores/search';
 	import Icon from '$lib/components/icons/Icon.svelte';
 
 	const auth = $derived($authStore);
@@ -31,6 +32,7 @@
 					type="search"
 					placeholder="Search playlists..."
 					class="search-input"
+					oninput={(e) => searchStore.set((e.target as HTMLInputElement).value)}
 					disabled={!auth.isAuthenticated}
 				/>
 			</div>
@@ -178,10 +180,6 @@
 
 		.search-input {
 			font-size: var(--font-size-xs);
-		}
-
-		.user-button span {
-			display: none;
 		}
 	}
 </style>

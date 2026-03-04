@@ -1,16 +1,21 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+
 	import { authStore } from '$lib/stores/auth';
 	import { config } from '$lib/stores/config';
 	import { viewPreferences } from '$lib/stores/viewPreferences';
+	import { searchStore } from '$lib/stores/search';
+
 	import { createAPIClient } from '@tidal-music/api';
 	import { credentialsProvider } from '@tidal-music/auth';
 	import { getCoverArtUrl } from '$lib/utils/tidal-utils';
+
 	import ErrorMessage from './ErrorMessage.svelte';
 	import Toolbar from './toolbar/Toolbar.svelte';
 	import PlaylistGrid from './playlist/PlaylistGrid.svelte';
 	import StatsCards from './dashboard/StatsCards.svelte';
 	import BulkActionBar from './bulk/BulkActionBar.svelte';
+
 	import type { FilterState } from './toolbar/FilterPanel.svelte';
 	import type { Playlist, CoverArt } from '$lib/types/tidal';
 
@@ -20,7 +25,6 @@
 	let filteredPlaylists = $state<Playlist[]>([]);
 	let included = $state<CoverArt[]>([]);
 	let selectedIds = $state<Set<string>>(new Set());
-	let searchQuery = $state('');
 	let activeFilters = $state<FilterState>({
 		dateRange: 'all',
 		tags: [],
@@ -30,6 +34,7 @@
 	const auth = $derived($authStore);
 	const cfg = $derived($config);
 	const prefs = $derived($viewPreferences);
+	const search = $derived($searchStore);
 
 	// Create a map of cover URLs for easy lookup
 	const coverUrls = $derived(
@@ -77,7 +82,6 @@
 
 			playlists = data.data as Playlist[];
 			included = (data.included as CoverArt[]) || [];
-			filterAndSortPlaylists();
 			isLoading = false;
 		} catch (err) {
 			console.error('Error loading playlists:', err);
@@ -90,8 +94,8 @@
 		let result = [...playlists];
 
 		// Apply search filter
-		if (searchQuery.trim()) {
-			const query = searchQuery.toLowerCase();
+		if (search.trim()) {
+			const query = search.toLowerCase();
 			result = result.filter((p) => p.attributes.name.toLowerCase().includes(query));
 		}
 
@@ -148,13 +152,11 @@
 	}
 
 	function handleSearch(query: string) {
-		searchQuery = query;
-		filterAndSortPlaylists();
+		searchStore.set(query);
 	}
 
 	function handleFilter(filters: FilterState) {
 		activeFilters = filters;
-		filterAndSortPlaylists();
 	}
 
 	function handleSelect(id: string, selected: boolean) {
@@ -217,6 +219,8 @@
 	$effect(() => {
 		prefs.sortBy;
 		prefs.sortDirection;
+		search;
+		activeFilters;
 		filterAndSortPlaylists();
 	});
 

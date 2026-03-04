@@ -1,5 +1,4 @@
 import { writable } from 'svelte/store';
-import { browser } from '$app/environment';
 
 // Types
 export interface Tag {
@@ -93,192 +92,114 @@ const DEFAULT_STATE: OrganizationState = {
 	]
 };
 
-// Load from localStorage
-function loadState(): OrganizationState {
-	if (!browser) return DEFAULT_STATE;
-
-	try {
-		const stored = localStorage.getItem('organization');
-		if (stored) {
-			return { ...DEFAULT_STATE, ...JSON.parse(stored) };
-		}
-	} catch (error) {
-		console.error('Failed to load organization state:', error);
-	}
-
-	return DEFAULT_STATE;
-}
-
-// Save to localStorage
-function saveState(state: OrganizationState) {
-	if (!browser) return;
-
-	try {
-		localStorage.setItem('organization', JSON.stringify(state));
-	} catch (error) {
-		console.error('Failed to save organization state:', error);
-	}
-}
-
 // Create the store
 function createOrganizationStore() {
-	const { subscribe, update, set } = writable<OrganizationState>(loadState());
+	const { subscribe, update, set } = writable<OrganizationState>(DEFAULT_STATE);
 
 	return {
 		subscribe,
 
 		// Tag operations
 		addTag: (name: string, color: string) => {
-			update((state) => {
-				const newTag: Tag = {
-					id: `tag-${Date.now()}`,
-					name,
-					color,
-					playlistIds: []
-				};
-				const newState = {
-					...state,
-					tags: [...state.tags, newTag]
-				};
-				saveState(newState);
-				return newState;
-			});
+			update((state) => ({
+				...state,
+				tags: [
+					...state.tags,
+					{ id: `tag-${Date.now()}`, name, color, playlistIds: [] }
+				]
+			}));
 		},
 
 		removeTag: (tagId: string) => {
-			update((state) => {
-				const newState = {
-					...state,
-					tags: state.tags.filter((t) => t.id !== tagId)
-				};
-				saveState(newState);
-				return newState;
-			});
+			update((state) => ({
+				...state,
+				tags: state.tags.filter((t) => t.id !== tagId)
+			}));
 		},
 
 		updateTag: (tagId: string, updates: Partial<Tag>) => {
-			update((state) => {
-				const newState = {
-					...state,
-					tags: state.tags.map((t) => (t.id === tagId ? { ...t, ...updates } : t))
-				};
-				saveState(newState);
-				return newState;
-			});
+			update((state) => ({
+				...state,
+				tags: state.tags.map((t) => (t.id === tagId ? { ...t, ...updates } : t))
+			}));
 		},
 
 		addPlaylistToTag: (tagId: string, playlistId: string) => {
-			update((state) => {
-				const newState = {
-					...state,
-					tags: state.tags.map((t) =>
-						t.id === tagId && !t.playlistIds.includes(playlistId)
-							? { ...t, playlistIds: [...t.playlistIds, playlistId] }
-							: t
-					)
-				};
-				saveState(newState);
-				return newState;
-			});
+			update((state) => ({
+				...state,
+				tags: state.tags.map((t) =>
+					t.id === tagId && !t.playlistIds.includes(playlistId)
+						? { ...t, playlistIds: [...t.playlistIds, playlistId] }
+						: t
+				)
+			}));
 		},
 
 		removePlaylistFromTag: (tagId: string, playlistId: string) => {
-			update((state) => {
-				const newState = {
-					...state,
-					tags: state.tags.map((t) =>
-						t.id === tagId
-							? { ...t, playlistIds: t.playlistIds.filter((id) => id !== playlistId) }
-							: t
-					)
-				};
-				saveState(newState);
-				return newState;
-			});
+			update((state) => ({
+				...state,
+				tags: state.tags.map((t) =>
+					t.id === tagId
+						? { ...t, playlistIds: t.playlistIds.filter((id) => id !== playlistId) }
+						: t
+				)
+			}));
 		},
 
 		// Folder operations
 		addFolder: (name: string, parentId?: string) => {
-			update((state) => {
-				const newFolder: Folder = {
-					id: `folder-${Date.now()}`,
-					name,
-					playlistIds: [],
-					parentId,
-					expanded: true
-				};
-				const newState = {
-					...state,
-					folders: [...state.folders, newFolder]
-				};
-				saveState(newState);
-				return newState;
-			});
+			update((state) => ({
+				...state,
+				folders: [
+					...state.folders,
+					{ id: `folder-${Date.now()}`, name, playlistIds: [], parentId, expanded: true }
+				]
+			}));
 		},
 
 		removeFolder: (folderId: string) => {
-			update((state) => {
-				const newState = {
-					...state,
-					folders: state.folders.filter((f) => f.id !== folderId && f.parentId !== folderId)
-				};
-				saveState(newState);
-				return newState;
-			});
+			update((state) => ({
+				...state,
+				folders: state.folders.filter((f) => f.id !== folderId && f.parentId !== folderId)
+			}));
 		},
 
 		updateFolder: (folderId: string, updates: Partial<Folder>) => {
-			update((state) => {
-				const newState = {
-					...state,
-					folders: state.folders.map((f) => (f.id === folderId ? { ...f, ...updates } : f))
-				};
-				saveState(newState);
-				return newState;
-			});
+			update((state) => ({
+				...state,
+				folders: state.folders.map((f) => (f.id === folderId ? { ...f, ...updates } : f))
+			}));
 		},
 
 		toggleFolder: (folderId: string) => {
-			update((state) => {
-				const newState = {
-					...state,
-					folders: state.folders.map((f) =>
-						f.id === folderId ? { ...f, expanded: !f.expanded } : f
-					)
-				};
-				saveState(newState);
-				return newState;
-			});
+			update((state) => ({
+				...state,
+				folders: state.folders.map((f) =>
+					f.id === folderId ? { ...f, expanded: !f.expanded } : f
+				)
+			}));
 		},
 
 		addPlaylistToFolder: (folderId: string, playlistId: string) => {
-			update((state) => {
-				const newState = {
-					...state,
-					folders: state.folders.map((f) =>
-						f.id === folderId && !f.playlistIds.includes(playlistId)
-							? { ...f, playlistIds: [...f.playlistIds, playlistId] }
-							: f
-					)
-				};
-				saveState(newState);
-				return newState;
-			});
+			update((state) => ({
+				...state,
+				folders: state.folders.map((f) =>
+					f.id === folderId && !f.playlistIds.includes(playlistId)
+						? { ...f, playlistIds: [...f.playlistIds, playlistId] }
+						: f
+				)
+			}));
 		},
 
 		removePlaylistFromFolder: (folderId: string, playlistId: string) => {
-			update((state) => {
-				const newState = {
-					...state,
-					folders: state.folders.map((f) =>
-						f.id === folderId
-							? { ...f, playlistIds: f.playlistIds.filter((id) => id !== playlistId) }
-							: f
-					)
-				};
-				saveState(newState);
-				return newState;
-			});
+			update((state) => ({
+				...state,
+				folders: state.folders.map((f) =>
+					f.id === folderId
+						? { ...f, playlistIds: f.playlistIds.filter((id) => id !== playlistId) }
+						: f
+				)
+			}));
 		},
 
 		// Get playlists for a tag or folder
@@ -300,7 +221,6 @@ function createOrganizationStore() {
 		// Reset to defaults
 		reset: () => {
 			set(DEFAULT_STATE);
-			saveState(DEFAULT_STATE);
 		}
 	};
 }

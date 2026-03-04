@@ -2,7 +2,10 @@
 	import ViewSwitcher from './ViewSwitcher.svelte';
 	import SearchBar from './SearchBar.svelte';
 	import FilterPanel, { type FilterState } from './FilterPanel.svelte';
+
 	import { viewPreferences, type SortOption } from '$lib/stores/viewPreferences';
+	import { searchStore } from '$lib/stores/search';
+
 	import Icon from '$lib/components/icons/Icon.svelte';
 
 	interface Props {
@@ -15,11 +18,10 @@
 
 	const prefs = $derived($viewPreferences);
 
-	let searchValue = $state('');
 	let filterPanelOpen = $state(false);
 
 	function handleSearch(value: string) {
-		searchValue = value;
+		searchStore.set(value);
 		if (onSearch) {
 			onSearch(value);
 		}
@@ -47,7 +49,7 @@
 
 <div class="toolbar">
 	<div class="toolbar-left">
-		<SearchBar value={searchValue} onSearch={handleSearch} placeholder="Search playlists..." />
+		<SearchBar onSearch={handleSearch} placeholder="Search playlists..." />
 	</div>
 
 	<div class="toolbar-right">
@@ -190,10 +192,6 @@
 
 		.toolbar-right {
 			flex-wrap: wrap;
-		}
-
-		.filter-button span {
-			display: none;
 		}
 	}
 </style>
