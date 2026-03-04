@@ -10,9 +10,13 @@ Future feature ideas — tackle these once the core TODO list is complete.
 
 Explore using indexedDb for actual storage because a lot of playlist data can be stored at once. This may also be app storage if this is used as a native app.
 
+## Native folder management via Tidal API
+
+The Tidal v2 API has full `UserCollectionFolders` CRUD (`GET`, `POST`, `PATCH`, `DELETE`, add/remove items), already typed in `@tidal-music/api`'s generated types. This means folders can be managed natively through the API rather than being inferred from the sidebar — creating, renaming, and deleting folders without any encoding tricks.
+
 ## Nested folders via name encoding
 
-Tidal supports folders natively, but only one level deep. For users who want deeper nesting, encode folder path in the playlist name using the same bracket-token convention used for tags:
+For nesting deeper than Tidal's native one level, encode folder path in the playlist name using the same bracket-token convention used for tags:
 
 ```text
 My Playlist [folder:Work Music/Deep Focus]

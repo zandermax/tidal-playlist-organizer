@@ -87,15 +87,16 @@ My Playlist [workout][chill]
 - `src/lib/stores/organization.ts`
 - Any playlist-fetching code that builds the playlist list
 
+**API note:** `PATCH /playlists/{id}` is confirmed in the Tidal v2 API and is already fully typed in `@tidal-music/api`'s generated types (`PlaylistsUpdateOperation_Payload_Data_Attributes` has `name?`, `description?`, `accessType?`). No SDK changes needed — call `apiClient.PATCH('/playlists/{id}', { body: ... })` directly. Build a `src/lib/api/playlists.ts` wrapper for these calls.
+
 **Your tasks:**
 
-- [ ] Write a `parsePlaylistName(raw: string): { displayName: string; tags: string[] }` utility that extracts bracket tokens and returns the clean display name
-- [ ] After fetching playlists, run each name through `parsePlaylistName` and use the results to populate the organization store's tag list (derive `Tag[]` from the union of all parsed tags across all playlists)
+- [x] Write a `parsePlaylistName(raw: string): { displayName: string; tags: string[] }` utility — already done in `src/lib/utils/parsers.ts`
+- [ ] Add `populateTagsFromPlaylists(playlists)` to the organization store — derives `Tag[]` by scanning all playlist names with `parsePlaylistName`, no localStorage needed
+- [ ] Call `populateTagsFromPlaylists` in `PlaylistsView` right after `loadPlaylists` sets `playlists`
 - [ ] Use `displayName` everywhere the playlist name is rendered instead of the raw name
 
-**Hint:** A regex like `/\[([^\]]+)\]/g` will capture all bracket tokens.
-
-**Checkpoint:** Paste your `parsePlaylistName` function and describe how you're populating the store from it. Ask the agent to "check step 1.5".
+**Checkpoint:** Paste your updated organization store method and the `loadPlaylists` call site. Ask the agent to "check step 1.5".
 
 ---
 
